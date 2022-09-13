@@ -34,14 +34,18 @@ public class SpectraChestMod implements ModInitializer {
 				(server, player, handler, buf, responseSender) -> {
 					if (player.currentScreenHandler instanceof GenericContainerScreenHandler) {
 						var screenhandler = (GenericContainerScreenHandler) player.currentScreenHandler;
-						new Mover().Move(player.getInventory(), screenhandler.getInventory(), 9, 0);
+						var playerInventory = player.getInventory();
+						var chestInventory = screenhandler.getInventory();
+						new Mover().Move(playerInventory, chestInventory, 9, 0, 36, chestInventory.size());
 					}
 				});
 		ServerPlayNetworking.registerGlobalReceiver(new Identifier("spectra-chest", "move-down"),
 				(server, player, handler, buf, responseSender) -> {
 					if (player.currentScreenHandler instanceof GenericContainerScreenHandler) {
 						var screenhandler = (GenericContainerScreenHandler) player.currentScreenHandler;
-						new Mover().Move(screenhandler.getInventory(), player.getInventory(), 0, 9);
+						var playerInventory = player.getInventory();
+						var chestInventory = screenhandler.getInventory();
+						new Mover().Move(chestInventory, playerInventory, 0, 9, chestInventory.size(), 36);
 					}
 				});
 		ServerPlayNetworking.registerGlobalReceiver(new Identifier("spectra-chest", "sort"),
