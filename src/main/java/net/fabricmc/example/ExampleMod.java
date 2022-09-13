@@ -15,7 +15,7 @@ public class ExampleMod implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
-	public static final Logger LOGGER = LoggerFactory.getLogger("modid");
+	public static final Logger LOGGER = LoggerFactory.getLogger("spectra-chest");
 
 	@Override
 	public void onInitialize() {
@@ -31,21 +31,21 @@ public class ExampleMod implements ModInitializer {
 									return 1;
 								})));
 
-		ServerPlayNetworking.registerGlobalReceiver(new Identifier("modid", "move-up"),
+		ServerPlayNetworking.registerGlobalReceiver(new Identifier("spectra-chest", "move-up"),
 				(server, player, handler, buf, responseSender) -> {
 					if (player.currentScreenHandler instanceof GenericContainerScreenHandler) {
 						var screenhandler = (GenericContainerScreenHandler) player.currentScreenHandler;
 						new Mover().Move(player.getInventory(), screenhandler.getInventory());
 					}
 				});
-		ServerPlayNetworking.registerGlobalReceiver(new Identifier("modid", "move-down"),
+		ServerPlayNetworking.registerGlobalReceiver(new Identifier("spectra-chest", "move-down"),
 				(server, player, handler, buf, responseSender) -> {
 					if (player.currentScreenHandler instanceof GenericContainerScreenHandler) {
 						var screenhandler = (GenericContainerScreenHandler) player.currentScreenHandler;
 						new Mover().Move(screenhandler.getInventory(), player.getInventory());
 					}
 				});
-		ServerPlayNetworking.registerGlobalReceiver(new Identifier("modid", "sort"),
+		ServerPlayNetworking.registerGlobalReceiver(new Identifier("spectra-chest", "sort"),
 				(server, player, handler, buf, responseSender) -> {
 					var flag = buf.readByte();
 					if (flag == 0) {

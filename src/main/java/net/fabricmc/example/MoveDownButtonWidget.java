@@ -10,7 +10,7 @@ import net.minecraft.text.Text;
 
 @Environment(EnvType.CLIENT)
 public class MoveDownButtonWidget extends TexturedButtonWidget {
-    private static final Identifier texture = new Identifier("modid", "move-down-button.png");
+    private static final Identifier texture = new Identifier("spectra-chest", "move-down-button.png");
 
     public MoveDownButtonWidget(int x, int y) {
         super(x, y, 9, 9, 0, 0, 9, texture, 9, 18, null, Text.literal(""));
@@ -20,6 +20,6 @@ public class MoveDownButtonWidget extends TexturedButtonWidget {
     public void onPress() {
         ExampleMod.LOGGER.info("Pressed button");
         var buf = PacketByteBufs.create();
-        ClientPlayNetworking.send(new Identifier("modid", "move-down"), buf);
+        ClientPlayNetworking.send(new Identifier("spectra-chest", "move-down"), buf);
     }
 }

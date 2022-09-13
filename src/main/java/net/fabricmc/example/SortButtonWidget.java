@@ -11,10 +11,10 @@ import net.minecraft.text.Text;
 @Environment(EnvType.CLIENT)
 public class SortButtonWidget extends TexturedButtonWidget {
     private Inventory inventory;
-    private static final Identifier texture = new Identifier("modid", "sort-button.png");
+    private static final Identifier texture = new Identifier("spectra-chest", "sort-button.png");
 
     public SortButtonWidget(int x, int y, Inventory inventory) {
-        super(x, y, 9, 9, 0, 0, 9, texture, 9, 18, null, Text.literal(""));
+        super(x, y, 13, 9, 0, 0, 9, texture, 13, 18, null, Text.literal(""));
         this.inventory = inventory;
     }
 
@@ -27,6 +27,6 @@ public class SortButtonWidget extends TexturedButtonWidget {
         } else {
             buf.writeByte(1);
         }
-        ClientPlayNetworking.send(new Identifier("modid", "sort"), buf);
+        ClientPlayNetworking.send(new Identifier("spectra-chest", "sort"), buf);
     }
 }

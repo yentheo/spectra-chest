@@ -1,20 +1,19 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "spectra-chest",
   "version": "${version}",
 
-  "name": "Example Mod",
+  "name": "Spectra Chest",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
     "Me!"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://spectra.one/"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/spectra-chest/icon.png",
 
   "environment": "*",
   "entrypoints": {
@@ -23,7 +22,7 @@
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "spectra-chest.mixins.json"
   ],
 
   "depends": {
