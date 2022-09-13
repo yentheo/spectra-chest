@@ -12,16 +12,19 @@ public class Mover {
         for (var i = skipFrom; i < fromSize; i++) {
             var stack = from.getStack(i);
             var stackItem = stack.getItem();
-            var toStackWithFreeSpace = GetStackWithFreeSpace(to, stackItem, skipTo);
+            var slotIndexWithFreeSpace = GetSlotIndexWithFreeSpace(to, stackItem, skipTo);
+            var toStackWithFreeSpace = to.getStack(slotIndexWithFreeSpace);
             if (toStackWithFreeSpace.getItem() instanceof AirBlockItem) {
-                to.setStack(i, stack);
+                stack = from.removeStack(i);
+                to.setStack(slotIndexWithFreeSpace, stack);
             } else {
                 var overflow = 0;
                 do {
                     overflow = Move(stack, toStackWithFreeSpace);
                     stack.setCount(overflow);
-                    toStackWithFreeSpace = GetStackWithFreeSpace(to, stackItem, skipTo);
-                } while (overflow != 0 && toStackWithFreeSpace != null);
+                    slotIndexWithFreeSpace = GetSlotIndexWithFreeSpace(to, stackItem, skipTo);
+                    toStackWithFreeSpace = to.getStack(slotIndexWithFreeSpace);
+                } while (overflow != 0 && slotIndexWithFreeSpace >= 0);
 
                 if (overflow == 0) {
                     from.removeStack(i);
@@ -44,20 +47,20 @@ public class Mover {
         }
     }
 
-    private ItemStack GetStackWithFreeSpace(Inventory to, Item item, int skipTo) {
+    private int GetSlotIndexWithFreeSpace(Inventory to, Item item, int skipTo) {
         var toSize = to.size();
         for (var i = skipTo; i < toSize; i++) {
             var toStack = to.getStack(i);
             if (toStack.getItem() == item && toStack.getCount() < item.getMaxCount()) {
-                return toStack;
+                return i;
             }
         }
         for (var i = skipTo; i < toSize; i++) {
             var toStack = to.getStack(i);
             if (toStack.getItem() instanceof AirBlockItem) {
-                return toStack;
+                return i;
             }
         }
-        return null;
+        return -1;
     }
 }

@@ -48,8 +48,8 @@ public class ScreenMixin extends Screen {
 			this.addDrawableChild(widget2);
 			var x = this.x + this.backgroundWidth - 20;
 			var y = this.y + (numSlots > 36 ? (backgroundHeight - 95) : 6);
-			// this.addDrawableChild(new MoveUpButtonWidget(x - 11, y));
-			// this.addDrawableChild(new MoveDownButtonWidget(x - 22, y));
+			this.addDrawableChild(new MoveUpButtonWidget(x - 11, y));
+			this.addDrawableChild(new MoveDownButtonWidget(x - 22, y));
 		}
 	}
 }

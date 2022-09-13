@@ -43,7 +43,6 @@ public class Sorter {
 
         var tempInventory = new ArrayList<ItemStack>();
 
-        // skip hotbar, start at 8
         for (var i = 0; i < inventorySize; i++) {
             var stack = inventory.removeStack(i);
             if (!(stack.getItem() instanceof AirBlockItem)) {
