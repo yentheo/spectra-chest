@@ -14,5 +14,5 @@ The mod adds 4 buttons to every chest.
 
 ## Sorting
 
-The sorting tries to merge stacks of the same size and sorts all items based on an internal Minecraft ID. 
+The sorting tries to merge stacks of the same items and sorts all items based on an internal Minecraft ID. 
 So items will always be sorted in the same order. Maybe future versions will have a more logical order, like placing more "expensive" items more in the beginning.
