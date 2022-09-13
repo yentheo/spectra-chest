@@ -2,7 +2,7 @@
 
 A Minecraft mod build with Fabric for Minecraft 1.19.2. 
 
-![Features](docs/images/show.gif)
+![Features](/docs/assets/show.gif)
 
 The mod adds 4 buttons to every chest.
 1. Move all (or as much as free space allows) to user inventory
@@ -10,7 +10,7 @@ The mod adds 4 buttons to every chest.
 3. Sort user inventory
 4. Sort chest
 
-![Button explanation](docs/images/overview-screenshot.png)
+![Button explanation](/docs/assets/overview-screenshot.png)
 
 ## Sorting
 
