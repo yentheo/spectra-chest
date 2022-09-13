@@ -1,9 +1,4 @@
-package net.fabricmc.example.mixin;
-
-import net.fabricmc.example.Inventory;
-import net.fabricmc.example.MoveDownButtonWidget;
-import net.fabricmc.example.MoveUpButtonWidget;
-import net.fabricmc.example.SortButtonWidget;
+package one.spectra.chest.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,7 +6,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.text.Text;
-
+import one.spectra.chest.Inventory;
+import one.spectra.chest.MoveDownButtonWidget;
+import one.spectra.chest.MoveUpButtonWidget;
+import one.spectra.chest.SortButtonWidget;
 import net.minecraft.client.gui.screen.Screen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -50,8 +48,8 @@ public class ScreenMixin extends Screen {
 			this.addDrawableChild(widget2);
 			var x = this.x + this.backgroundWidth - 20;
 			var y = this.y + (numSlots > 36 ? (backgroundHeight - 95) : 6);
-			this.addDrawable(new MoveUpButtonWidget(x - 11, y));
-			this.addDrawable(new MoveDownButtonWidget(x - 22, y));
+			// this.addDrawableChild(new MoveUpButtonWidget(x - 11, y));
+			// this.addDrawableChild(new MoveDownButtonWidget(x - 22, y));
 		}
 	}
 }

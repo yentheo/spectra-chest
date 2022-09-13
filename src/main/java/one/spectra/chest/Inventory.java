@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package one.spectra.chest;
 
 public enum Inventory {
     PLAYER,

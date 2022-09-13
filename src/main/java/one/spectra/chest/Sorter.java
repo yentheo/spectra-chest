@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package one.spectra.chest;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,8 +18,8 @@ public class Sorter {
 
         var tempInventory = new ArrayList<ItemStack>();
 
-        // skip hotbar, start at 8
-        for (var i = 8; i < inventorySize; i++) {
+        // skip hotbar, start at 9
+        for (var i = 9; i < inventorySize; i++) {
             var stack = playerInventory.removeStack(i);
             if (!(stack.getItem() instanceof AirBlockItem)) {
                 tempInventory.add(stack);

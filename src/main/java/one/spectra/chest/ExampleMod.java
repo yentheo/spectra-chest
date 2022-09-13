@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package one.spectra.chest;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -19,14 +19,13 @@ public class ExampleMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("Hello Fabric world!");
 		CommandRegistrationCallback.EVENT
 				.register(
 						(dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("sort")
 								.executes(context -> {
 									// For versions below 1.19, replace "Text.literal" with "new LiteralText".
 									context.getSource().sendMessage(Text
-											.literal("Sort  called by " + context.getSource().getPlayer().getName()));
+											.literal("Sort called by " + context.getSource().getPlayer().getName()));
 									new Sorter().Sort(context.getSource().getPlayer());
 									return 1;
 								})));
@@ -35,14 +34,14 @@ public class ExampleMod implements ModInitializer {
 				(server, player, handler, buf, responseSender) -> {
 					if (player.currentScreenHandler instanceof GenericContainerScreenHandler) {
 						var screenhandler = (GenericContainerScreenHandler) player.currentScreenHandler;
-						new Mover().Move(player.getInventory(), screenhandler.getInventory());
+						new Mover().Move(player.getInventory(), screenhandler.getInventory(), 9, 0);
 					}
 				});
 		ServerPlayNetworking.registerGlobalReceiver(new Identifier("spectra-chest", "move-down"),
 				(server, player, handler, buf, responseSender) -> {
 					if (player.currentScreenHandler instanceof GenericContainerScreenHandler) {
 						var screenhandler = (GenericContainerScreenHandler) player.currentScreenHandler;
-						new Mover().Move(screenhandler.getInventory(), player.getInventory());
+						new Mover().Move(screenhandler.getInventory(), player.getInventory(), 0, 9);
 					}
 				});
 		ServerPlayNetworking.registerGlobalReceiver(new Identifier("spectra-chest", "sort"),

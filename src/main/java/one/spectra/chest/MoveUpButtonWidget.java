@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package one.spectra.chest;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -19,7 +19,7 @@ public class MoveUpButtonWidget extends TexturedButtonWidget {
     @Override
     public void onPress() {
         ExampleMod.LOGGER.info("Pressed button");
-        var buf = PacketByteBufs.create();
+        var buf = PacketByteBufs.empty();
         ClientPlayNetworking.send(new Identifier("spectra-chest", "move-up"), buf);
     }
 }

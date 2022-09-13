@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package one.spectra.chest;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
