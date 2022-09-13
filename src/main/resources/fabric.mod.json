@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "spectra-chest",
   "version": "${version}",
-
   "name": "Spectra Chest",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
@@ -11,27 +10,22 @@
   "contact": {
     "homepage": "https://spectra.one/"
   },
-
   "license": "CC0-1.0",
   "icon": "assets/spectra-chest/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
-      "one.spectra.chest.ExampleMod"
+      "one.spectra.chest.SpectraChestMod"
     ]
   },
   "mixins": [
     "spectra-chest.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.14.6",
     "fabric": "*",
     "minecraft": "~1.19",
     "java": ">=17"
   },
-  "suggests": {
-    "another-mod": "*"
-  }
+  "suggests": {}
 }

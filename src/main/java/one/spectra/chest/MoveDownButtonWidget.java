@@ -18,7 +18,7 @@ public class MoveDownButtonWidget extends TexturedButtonWidget {
 
     @Override
     public void onPress() {
-        ExampleMod.LOGGER.info("Pressed button");
+        SpectraChestMod.LOGGER.info("Pressed button");
         var buf = PacketByteBufs.empty();
         ClientPlayNetworking.send(new Identifier("spectra-chest", "move-down"), buf);
     }

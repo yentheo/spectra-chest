@@ -20,7 +20,7 @@ public class SortButtonWidget extends TexturedButtonWidget {
 
     @Override
     public void onPress() {
-        ExampleMod.LOGGER.info("Pressed button");
+        SpectraChestMod.LOGGER.info("Pressed button");
         var buf = PacketByteBufs.create();
         if (inventory == Inventory.PLAYER) {
             buf.writeByte(0);
