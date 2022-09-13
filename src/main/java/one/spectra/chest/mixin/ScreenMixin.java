@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.text.Text;
-import one.spectra.chest.Inventory;
+import one.spectra.chest.InventoryType;
 import one.spectra.chest.MoveDownButtonWidget;
 import one.spectra.chest.MoveUpButtonWidget;
 import one.spectra.chest.SortButtonWidget;
@@ -40,11 +40,11 @@ public class ScreenMixin extends Screen {
 		if (numSlots >= 45) {
 			var x = this.x + this.backgroundWidth - 20;
 			var y = this.y + (numSlots > 36 ? (backgroundHeight - 95) : 6);
-			var widget = new SortButtonWidget(x, y, Inventory.PLAYER);
+			var widget = new SortButtonWidget(x, y, InventoryType.PLAYER);
 			this.addDrawableChild(widget);
 		}
 		if (numSlots >= 63) {
-			var widget2 = new SortButtonWidget(this.x + this.backgroundWidth - 20, this.y + 6, Inventory.CHEST);
+			var widget2 = new SortButtonWidget(this.x + this.backgroundWidth - 20, this.y + 6, InventoryType.CHEST);
 			this.addDrawableChild(widget2);
 			var x = this.x + this.backgroundWidth - 20;
 			var y = this.y + (numSlots > 36 ? (backgroundHeight - 95) : 6);

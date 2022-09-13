@@ -10,10 +10,10 @@ import net.minecraft.text.Text;
 
 @Environment(EnvType.CLIENT)
 public class SortButtonWidget extends TexturedButtonWidget {
-    private Inventory inventory;
+    private InventoryType inventory;
     private static final Identifier texture = new Identifier("spectra-chest", "sort-button.png");
 
-    public SortButtonWidget(int x, int y, Inventory inventory) {
+    public SortButtonWidget(int x, int y, InventoryType inventory) {
         super(x, y, 13, 9, 0, 0, 9, texture, 13, 18, null, Text.literal(""));
         this.inventory = inventory;
     }
@@ -22,7 +22,7 @@ public class SortButtonWidget extends TexturedButtonWidget {
     public void onPress() {
         SpectraChestMod.LOGGER.info("Pressed button");
         var buf = PacketByteBufs.create();
-        if (inventory == Inventory.PLAYER) {
+        if (inventory == InventoryType.PLAYER) {
             buf.writeByte(0);
         } else {
             buf.writeByte(1);

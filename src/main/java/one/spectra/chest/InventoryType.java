@@ -1,6 +1,6 @@
 package one.spectra.chest;
 
-public enum Inventory {
+public enum InventoryType {
     PLAYER,
     CHEST
 }
