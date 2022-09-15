@@ -19,7 +19,7 @@ public class Sorter {
         // skip hotbar, start at 9
         for (int i = 9; i < 36; i++) {
             ItemStack stack = playerInventory.getItem(i);
-            
+
             playerInventory.clear(i);
             if (stack != null && !stack.getType().isAir()) {
                 tempInventory.add(stack);
@@ -31,8 +31,6 @@ public class Sorter {
         comparator = comparator.thenComparing(countComparison.reversed());
 
         var merged = MergeStacks(tempInventory).stream().sorted(comparator).toList();
-
-
 
         for (var i = 0; i < merged.size(); i++) {
             playerInventory.setItem(i + 9, merged.get(i));
@@ -68,24 +66,21 @@ public class Sorter {
     private ArrayList<ItemStack> MergeStacks(ArrayList<ItemStack> original) {
         var merged = new ArrayList<ItemStack>();
         for (ItemStack itemStack : original) {
-            if (itemStack.getMaxStackSize() > 1) {
-                var firstFreeStack = merged.stream()
-                        .filter(x -> x.getType().compareTo(itemStack.getType()) == 0
-                                && x.getAmount() < x.getMaxStackSize() 
-                                && x.getType() != Material.PLAYER_HEAD
-                                && !x.getItemMeta().hasDisplayName())
-                        .findFirst();
-                if (firstFreeStack.isPresent()) {
-                    var currentAmount = firstFreeStack.get().getAmount();
+            if (IsEligibleForMerging(itemStack)) {
+                var optionalFirstFreeStack = merged.stream().filter(x -> IsEligibleForMerging(x))
+                        .filter(x -> x.getType().compareTo(itemStack.getType()) == 0).findFirst();
+                if (optionalFirstFreeStack.isPresent()) {
+                    var firstFreeStack = optionalFirstFreeStack.get();
+                    var currentAmount = firstFreeStack.getAmount();
                     var amountToAdd = itemStack.getAmount();
                     var newAmount = currentAmount + amountToAdd;
                     var overflow = newAmount - itemStack.getMaxStackSize();
                     if (overflow > 0) {
-                        firstFreeStack.get().setAmount(itemStack.getMaxStackSize());
+                        firstFreeStack.setAmount(itemStack.getMaxStackSize());
                         itemStack.setAmount(overflow);
                         merged.add(itemStack);
                     } else {
-                        firstFreeStack.get().setAmount(newAmount);
+                        firstFreeStack.setAmount(newAmount);
                     }
                 } else {
                     merged.add(itemStack);
@@ -95,5 +90,11 @@ public class Sorter {
             }
         }
         return merged;
+    }
+
+    private boolean IsEligibleForMerging(ItemStack itemStack) {
+        return itemStack.getMaxStackSize() > 1
+                && !itemStack.getItemMeta().hasDisplayName()
+                && itemStack.getType() != Material.PLAYER_HEAD;
     }
 }
