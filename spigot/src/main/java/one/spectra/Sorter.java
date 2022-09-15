@@ -32,6 +32,8 @@ public class Sorter {
 
         var merged = MergeStacks(tempInventory).stream().sorted(comparator).toList();
 
+
+
         for (var i = 0; i < merged.size(); i++) {
             playerInventory.setItem(i + 9, merged.get(i));
         }
@@ -69,7 +71,9 @@ public class Sorter {
             if (itemStack.getMaxStackSize() > 1) {
                 var firstFreeStack = merged.stream()
                         .filter(x -> x.getType().compareTo(itemStack.getType()) == 0
-                                && x.getAmount() < x.getMaxStackSize() && x.getType() != Material.PLAYER_HEAD)
+                                && x.getAmount() < x.getMaxStackSize() 
+                                && x.getType() != Material.PLAYER_HEAD
+                                && !x.getItemMeta().hasDisplayName())
                         .findFirst();
                 if (firstFreeStack.isPresent()) {
                     var currentAmount = firstFreeStack.get().getAmount();
