@@ -3,9 +3,9 @@
   "id": "spectra-chest",
   "version": "${version}",
   "name": "Spectra Chest",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "Adds some buttons to the chest UI to more easily sort your inventory.",
   "authors": [
-    "Me!"
+    "Cpt. Spectra"
   ],
   "contact": {
     "homepage": "https://spectra.one/"

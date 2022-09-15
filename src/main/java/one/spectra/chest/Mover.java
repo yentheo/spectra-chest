@@ -6,7 +6,26 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class Mover {
-    public void Move(Inventory from, Inventory to, int skipFrom, int skipTo, int fromSize, int toSize) {
+    public void move(one.spectra.chest.Inventory from, one.spectra.chest.Inventory to) {
+        var fromSize = from.getSize();
+        for (var i = 0; i < fromSize; i++) {
+            var stack = from.getStack(i);
+            var stackItem = stack.getItem();
+            if (!stackItem.isItem(AirBlockItem.class)) {
+                var totalToPutAway = stack.getCount();
+                var slotWithFreeSpace = to.getSlotWithFreeSpace(stackItem);
+                while (slotWithFreeSpace >= 0 && totalToPutAway > 0) {
+                    var overflow = to.moveToStack(slotWithFreeSpace, totalToPutAway);
+                    totalToPutAway = overflow;
+                    if (totalToPutAway > 0) {
+                        slotWithFreeSpace = to.getSlotWithFreeSpace(stackItem);
+                    }
+                }
+            }
+        }
+    }
+
+    public void move(Inventory from, Inventory to, int skipFrom, int skipTo, int fromSize, int toSize) {
         for (var i = skipFrom; i < fromSize; i++) {
             var stack = from.getStack(i);
             var stackItem = stack.getItem();
