@@ -5,11 +5,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.text.Text;
 import one.spectra.chest.InventoryType;
 import one.spectra.chest.MoveDownButtonWidget;
 import one.spectra.chest.MoveUpButtonWidget;
 import one.spectra.chest.SortButtonWidget;
+import one.spectra.chest.SpectraChestMod;
 import net.minecraft.client.gui.screen.Screen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -37,19 +39,23 @@ public class ScreenMixin extends Screen {
 			return;
 
 		int numSlots = client.player.currentScreenHandler.slots.size();
+		if (client.player.currentScreenHandler instanceof AbstractRecipeScreenHandler) {
+			var screenHandler = (AbstractRecipeScreenHandler) client.player.currentScreenHandler;
+			SpectraChestMod.LOGGER.info("recipe");
+			return;
+		}
+		var x = this.x + this.backgroundWidth - 20;
 		if (numSlots >= 45) {
-			var x = this.x + this.backgroundWidth - 20;
 			var y = this.y + (numSlots > 36 ? (backgroundHeight - 95) : 6);
 			var widget = new SortButtonWidget(x, y, InventoryType.PLAYER);
 			this.addDrawableChild(widget);
 		}
 		if (numSlots >= 63) {
-			var widget2 = new SortButtonWidget(this.x + this.backgroundWidth - 20, this.y + 6, InventoryType.CHEST);
+			var widget2 = new SortButtonWidget(x, this.y + 6, InventoryType.CHEST);
 			this.addDrawableChild(widget2);
-			var x = this.x + this.backgroundWidth - 20;
 			var y = this.y + (numSlots > 36 ? (backgroundHeight - 95) : 6);
-			this.addDrawableChild(new MoveUpButtonWidget(x - 11, y));
-			this.addDrawableChild(new MoveDownButtonWidget(x - 22, y));
+			// this.addDrawableChild(new MoveUpButtonWidget(x - 11, y));
+			// this.addDrawableChild(new MoveDownButtonWidget(x - 22, y));
 		}
 	}
 }
