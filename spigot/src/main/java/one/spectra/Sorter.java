@@ -11,6 +11,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import one.spectra.inventory.SpectraInventory;
 import one.spectra.inventory.fillers.DefaultFiller;
+import one.spectra.inventory.fillers.HorizontalFiller;
 import one.spectra.inventory.fillers.InventoryFiller;
 import one.spectra.inventory.fillers.VerticalFiller;
 
@@ -69,6 +70,7 @@ public class Sorter {
 
     private InventoryFiller getFiller(List<ItemStack> stacks, SpectraInventory inventory) {
         var fillers = new ArrayList<InventoryFiller>();
+        fillers.add(new HorizontalFiller());
         fillers.add(new VerticalFiller());
 
         var filler = fillers.stream().filter(x -> x.canFill(stacks, inventory)).findFirst();

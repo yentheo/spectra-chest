@@ -8,7 +8,7 @@
             "processId": "${command:PickJavaProcess}",
             "request": "attach",
             "type": "java",
-            "name": "Launch Current File",
+            "name": "Attach",
             "projectName": "spectra-chest",
             "sourcePaths": [
                 "./spigot/src"

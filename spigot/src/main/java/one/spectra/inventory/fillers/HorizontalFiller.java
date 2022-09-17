@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 import one.spectra.inventory.SpectraInventory;
 
-public class VerticalFiller implements InventoryFiller {
+public class HorizontalFiller implements InventoryFiller {
 
     @Override
     public boolean canFill(List<ItemStack> itemStacks, SpectraInventory inventory) {
@@ -16,9 +16,9 @@ public class VerticalFiller implements InventoryFiller {
                 .collect(Collectors.groupingBy(x -> x.getType().getKey().toString() + x.getItemMeta().getAsString(),
                         Collectors.counting()));
 
-        var columnsRequired = groups.values().stream().map(x -> Math.ceil((double)x / inventory.getRowAmount())).mapToInt(Double::intValue).sum();
+        var rowsRequired = groups.values().stream().map(x -> Math.ceil((double)x / 9)).mapToInt(Double::intValue).sum();
 
-        return columnsRequired <= 9;
+        return rowsRequired <= inventory.getRowAmount();
     }
 
     @Override
@@ -28,17 +28,17 @@ public class VerticalFiller implements InventoryFiller {
         var orderedGroups = groups.values().stream()
                 .sorted(Comparator.comparingInt(List<ItemStack>::size).reversed())
                 .toList();
-        var columnIndex = 0;
+        var rowIndex = 0;
         for (List<ItemStack> stacks : orderedGroups) {
-            var stackColumnIndex = 0;
+            var stackRowIndex = 0;
             for (var i = 0; i < stacks.size(); i++) {
-                if (i != 0 && i % inventory.getRowAmount() == 0) {
-                    stackColumnIndex++;
+                if (i != 0 && i % 9 == 0) {
+                    stackRowIndex++;
                 }
-                var slotIndex = i - stackColumnIndex * inventory.getRowAmount();
-                inventory.putInSlot(columnIndex + stackColumnIndex + (9 * slotIndex), stacks.get(i));
+                var slotIndex = i + 9 * rowIndex;
+                inventory.putInSlot(slotIndex, stacks.get(i));
             }
-            columnIndex = columnIndex + stackColumnIndex + 1;
+            rowIndex = rowIndex + stackRowIndex + 1;
         }
     }
 

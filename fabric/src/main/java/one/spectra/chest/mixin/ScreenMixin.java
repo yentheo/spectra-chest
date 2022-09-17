@@ -41,7 +41,7 @@ public class ScreenMixin extends Screen {
 		int numSlots = client.player.currentScreenHandler.slots.size();
 		if (client.player.currentScreenHandler instanceof AbstractRecipeScreenHandler) {
 			var screenHandler = (AbstractRecipeScreenHandler) client.player.currentScreenHandler;
-			SpectraChestMod.LOGGER.info("recipe");
+			SpectraChestMod.LOGGER.info(screenHandler.toString());
 			return;
 		}
 		var x = this.x + this.backgroundWidth - 20;
