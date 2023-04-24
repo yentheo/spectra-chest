@@ -1,2 +1,5 @@
-target/
-.mvn/
+.gradle
+.vscode
+build
+bin
+target

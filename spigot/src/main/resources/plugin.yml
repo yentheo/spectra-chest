@@ -1,4 +1,8 @@
-main: one.spectra.App
-name: SpectraChest
+main: one.spectra.better_chests.BetterChestsPlugin
+name: BetterChests
 version: 0.0.1
 api-version: 1.19
+commands:
+   better-chests:
+      description: Your description
+      usage: /better-chests
