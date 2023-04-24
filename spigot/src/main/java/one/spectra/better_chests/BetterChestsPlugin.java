@@ -11,6 +11,8 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 import one.spectra.better_chests.inventory.SpectraInventory;
 
@@ -18,9 +20,11 @@ import one.spectra.better_chests.inventory.SpectraInventory;
 public class BetterChestsPlugin extends JavaPlugin implements PluginMessageListener {
     public static Logger LOGGER;
     public static Server SERVER;
+    public static Injector INJECTOR;
 
     @Override
     public void onEnable() {
+        INJECTOR = Guice.createInjector(new BetterChestsModule(getServer()));
         LOGGER = getLogger();
         SERVER = getServer();
         LOGGER.info("Plugin enabled");
@@ -43,7 +47,7 @@ public class BetterChestsPlugin extends JavaPlugin implements PluginMessageListe
         var inventory = flag == 0
                 ? new SpectraInventory(player.getInventory())
                 : new SpectraInventory(player.getOpenInventory().getTopInventory());
-        new Sorter().sort(inventory);
+        INJECTOR.getInstance(Sorter.class).sort(inventory);
     }
 
     @Override

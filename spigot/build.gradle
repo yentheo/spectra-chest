@@ -1,9 +1,11 @@
 plugins {
-	id 'java'
+    id 'java'
     id 'jacoco'
+    id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
 group 'spigot.gradle.project'
+archivesBaseName = 'better-chests'
 version '0.0.1'
 
 repositories {
@@ -19,6 +21,7 @@ dependencies {
 
 	testImplementation 'org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT'
 	compileOnly 'org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT'
+    implementation group: 'com.google.inject', name: 'guice', version: '5.1.0'
 }
 
 test {
@@ -39,6 +42,14 @@ processResources {
 			it.delete()
 		}
 	}
+}
+
+shadowJar {
+    dependencies {
+        include dependency('com.google.inject:guice:5.1.0')
+        include dependency('com.google.guava:guava:30.1-jre')
+        include dependency('aopalliance:aopalliance:1.0')
+    }
 }
 
 sourceSets {
