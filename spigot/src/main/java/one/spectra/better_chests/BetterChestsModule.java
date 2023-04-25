@@ -15,8 +15,11 @@ import one.spectra.better_chests.inventory.fillers.InventoryFillerProvider;
 import one.spectra.better_chests.inventory.fillers.RowFiller;
 import one.spectra.better_chests.message_handlers.MessageHandler;
 import one.spectra.better_chests.message_handlers.MessageHandlerHub;
+import one.spectra.better_chests.message_handlers.MoveDownRequestHandler;
+import one.spectra.better_chests.message_handlers.MoveUpRequestHandler;
 import one.spectra.better_chests.message_handlers.SortRequestHandler;
 
+@ExcludeFromGeneratedCoverageReport
 public class BetterChestsModule extends AbstractModule {
 
     private Server _server;
@@ -34,6 +37,7 @@ public class BetterChestsModule extends AbstractModule {
         bind(Plugin.class).toInstance(_plugin);
         bind(MessageHandlerHub.class).asEagerSingleton();
         bind(Sorter.class);
+        bind(Mover.class);
         bind(InventoryFillerProvider.class);
         bind(DefaultFiller.class);
 
@@ -43,5 +47,7 @@ public class BetterChestsModule extends AbstractModule {
 
         Multibinder<MessageHandler> messageHandlerBinder = Multibinder.newSetBinder(binder(), MessageHandler.class);
         messageHandlerBinder.addBinding().to(SortRequestHandler.class);
+        messageHandlerBinder.addBinding().to(MoveUpRequestHandler.class);
+        messageHandlerBinder.addBinding().to(MoveDownRequestHandler.class);
     }
 }

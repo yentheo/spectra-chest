@@ -1,6 +1,8 @@
 package one.spectra.better_chests.inventory;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.inventory.PlayerInventory;
 
 import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
@@ -65,5 +67,15 @@ public class SpectraInventory implements Inventory {
     @Override
     public int getColumns() {
         return 9;
+    }
+
+    @Override
+    public List<ItemStack> add(List<ItemStack> stacks) {
+        var stacksToAdd = stacks.stream()
+                .map(x -> x.getItemStack()).toList().toArray(new org.bukkit.inventory.ItemStack[0]);
+        var restStacks = _inventory.addItem(stacksToAdd);
+        return restStacks.values().stream()
+                .map(x -> new SpectraItemStack(x))
+                .map(x -> (ItemStack) x).toList();
     }
 }

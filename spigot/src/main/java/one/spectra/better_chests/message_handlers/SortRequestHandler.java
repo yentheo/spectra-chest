@@ -6,9 +6,11 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import com.google.inject.Inject;
 
+import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
 import one.spectra.better_chests.Sorter;
 import one.spectra.better_chests.inventory.SpectraInventory;
 
+@ExcludeFromGeneratedCoverageReport
 public class SortRequestHandler implements MessageHandler {
 
     private Sorter _sorter;

@@ -9,6 +9,7 @@ public interface Inventory {
     List<ItemStack> getItemStacks();
     void putInSlot(int slot, ItemStack stack);
     void add(ItemStack stack);
+    List<ItemStack> add(List<ItemStack> stacks);
     int getSize();
     int getRows();
     int getColumns();

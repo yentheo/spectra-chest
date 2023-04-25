@@ -21,4 +21,10 @@ public class SpectraInventoryFactory implements InventoryFactory {
         var memoryInventory = _server.createInventory(null, size);
         return new SpectraInventory(memoryInventory);
     }
+
+    public Inventory create(Inventory inventory) {
+        var copied = create(inventory.getSize());
+        copied.add(inventory.getItemStacks());
+        return copied;
+    }
 }
