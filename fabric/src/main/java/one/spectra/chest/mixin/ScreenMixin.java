@@ -6,8 +6,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen.CreativeScreenHandler;
-import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.text.Text;
