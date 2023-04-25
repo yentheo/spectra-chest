@@ -3,7 +3,6 @@ package one.spectra.better_chests.inventory;
 import java.util.ArrayList;
 import org.bukkit.inventory.PlayerInventory;
 
-import one.spectra.better_chests.BetterChestsPlugin;
 import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
 import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.abstractions.SpectraItemStack;
@@ -13,10 +12,6 @@ public class SpectraInventory implements Inventory {
     private org.bukkit.inventory.Inventory _inventory;
     private int _skipSlots;
     private int _size;
-
-    public SpectraInventory(int size) {
-        this(BetterChestsPlugin.SERVER.createInventory(null, size));
-    }
 
     public SpectraInventory(PlayerInventory playerInventory) {
         this(playerInventory, 9, 27);
