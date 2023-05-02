@@ -1,11 +1,18 @@
 package one.spectra.better_chests;
 
 import org.bukkit.Server;
+import org.bukkit.event.player.PlayerChannelEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
+import one.spectra.better_chests.abstractions.event.EventHandler;
+import one.spectra.better_chests.abstractions.event.EventHub;
+import one.spectra.better_chests.abstractions.event.PlayerChannelEventHandler;
+import one.spectra.better_chests.abstractions.event.PlayerJoinEventHandler;
 import one.spectra.better_chests.inventory.InventoryFactory;
 import one.spectra.better_chests.inventory.SpectraInventoryFactory;
 import one.spectra.better_chests.inventory.fillers.ColumnFiller;
@@ -35,7 +42,10 @@ public class BetterChestsModule extends AbstractModule {
         bind(InventoryFactory.class).to(SpectraInventoryFactory.class);
         bind(Server.class).toInstance(_server);
         bind(Plugin.class).toInstance(_plugin);
+        
         bind(MessageHandlerHub.class).asEagerSingleton();
+        bind(EventHub.class).asEagerSingleton();
+
         bind(Sorter.class);
         bind(Mover.class);
         bind(InventoryFillerProvider.class);
@@ -49,5 +59,10 @@ public class BetterChestsModule extends AbstractModule {
         messageHandlerBinder.addBinding().to(SortRequestHandler.class);
         messageHandlerBinder.addBinding().to(MoveUpRequestHandler.class);
         messageHandlerBinder.addBinding().to(MoveDownRequestHandler.class);
+
+        Multibinder<EventHandler<PlayerJoinEvent>> playerJoinEventHandlerBinder = Multibinder.newSetBinder(binder(), new TypeLiteral<EventHandler<PlayerJoinEvent>>() {});
+        playerJoinEventHandlerBinder.addBinding().to(PlayerJoinEventHandler.class);
+        Multibinder<EventHandler<PlayerChannelEvent>> playerChannelEventHandlerBinder = Multibinder.newSetBinder(binder(), new TypeLiteral<EventHandler<PlayerChannelEvent>>() {});
+        playerChannelEventHandlerBinder.addBinding().to(PlayerChannelEventHandler.class);
     }
 }

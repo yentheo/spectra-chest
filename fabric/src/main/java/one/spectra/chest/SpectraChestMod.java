@@ -1,17 +1,24 @@
 package one.spectra.chest;
 
-import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.ClientModInitializer;
+import one.spectra.chest.commands.CommandHub;
+import one.spectra.chest.communication.receivers.ReceiverHub;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SpectraChestMod implements ModInitializer {
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
+import com.google.inject.Guice;
+
+public class SpectraChestMod implements ClientModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("spectra-chest");
 
 	@Override
-	public void onInitialize() {
+	public void onInitializeClient() {
+		var injector = Guice.createInjector(new SpectraChestModModule());
+
+		var receiverHub = injector.getInstance(ReceiverHub.class);
+		receiverHub.register();
+		var commandHub = injector.getInstance(CommandHub.class);
+		commandHub.register();
 	}
 }

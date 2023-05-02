@@ -14,7 +14,7 @@
   "icon": "assets/spectra-chest/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
+    "client": [
       "one.spectra.chest.SpectraChestMod"
     ]
   },
