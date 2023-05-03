@@ -27,8 +27,7 @@ public class ReceiverHub {
         var receiver = _injector.getInstance(receiverType);
         ClientPlayNetworking.registerGlobalReceiver(receiver.getChannel(), (client, handler, buf, responseSender) -> {
             var mapper = ObjectMapper.create();
-            var myBuf = buf.getWrittenBytes();
-            var json = new String(myBuf, StandardCharsets.UTF_8);
+            var json = new String(buf.getWrittenBytes(), StandardCharsets.UTF_8);
             var features = mapper.readValue(json, messageType);
             receiver.handle(features);
         });
