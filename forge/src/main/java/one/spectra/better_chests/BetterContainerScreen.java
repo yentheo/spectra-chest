@@ -25,11 +25,9 @@ public class BetterContainerScreen extends ContainerScreen {
         var sortButtonImage = new ResourceLocation("better_chests:sort-button.png");
         ImageButton sortButton = new ImageButton(this.leftPos + this.imageWidth - 20, this.topPos + 5, 13, 9, 0, 0,
                 0, sortButtonImage, 13, 18, e -> {
-                    LogUtils.getLogger().info("YAY");
                     BetterChestsPacketHandler.INSTANCE.sendToServer(new SortRequest(false));
                 });
         this.addRenderableWidget(sortButton);
-        LogUtils.getLogger().info("Init");
     }
 
     @Override

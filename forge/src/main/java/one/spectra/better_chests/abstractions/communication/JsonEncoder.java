@@ -13,6 +13,7 @@ import net.minecraft.network.FriendlyByteBuf;
 public class JsonEncoder<T> implements BiConsumer<T, FriendlyByteBuf>, Function<FriendlyByteBuf, T> {
 
     private Class<T> _clazz;
+    private static Gson Gson = new Gson();
 
     public JsonEncoder(Class<T> clazz) {
         _clazz = clazz;
@@ -20,23 +21,17 @@ public class JsonEncoder<T> implements BiConsumer<T, FriendlyByteBuf>, Function<
 
     @Override
     public void accept(T arg0, FriendlyByteBuf arg1) {
-        LogUtils.getLogger().info("encode");
-        var gson = new Gson();
         var type = new TypeToken<T>() {
         }.getType();
-        var json = gson.toJson(arg0, type);
+        var json = Gson.toJson(arg0, type);
         var bytes = json.getBytes(StandardCharsets.UTF_8);
         arg1.writeByteArray(bytes);
-        LogUtils.getLogger().info("bytes written");
-        LogUtils.getLogger().info(json);
     }
 
     @Override
     public T apply(FriendlyByteBuf arg0) {
-        LogUtils.getLogger().info("decode");
         String messageContent = new String(arg0.readByteArray(), StandardCharsets.UTF_8);
-        var gson = new Gson();
-        return gson.fromJson(messageContent, _clazz);
+        return Gson.fromJson(messageContent, _clazz);
     }
 
 }

@@ -19,11 +19,8 @@ public class BetterInventoryScreen extends InventoryScreen {
         super.init();
         ImageButton sortButton = new ImageButton(this.leftPos + this.imageWidth - 14 - 6, this.topPos + 18 * 4, 13, 9, 0, 0, 0,
                 new ResourceLocation("better_chests:sort-button.png"), 13, 18, e -> {
-                    LogUtils.getLogger().info("YAY");
-                    
                 });
         this.addRenderableWidget(sortButton);
-        LogUtils.getLogger().info("Init");
     }
 
     @Override

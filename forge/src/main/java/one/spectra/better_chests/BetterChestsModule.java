@@ -12,11 +12,9 @@ import one.spectra.better_chests.inventory.fillers.Filler;
 import one.spectra.better_chests.inventory.fillers.InventoryFillerProvider;
 import one.spectra.better_chests.inventory.fillers.RowFiller;
 import one.spectra.better_chests.message_handlers.MessageHandler;
-import one.spectra.better_chests.message_handlers.MessageHandlerHub;
 import one.spectra.better_chests.message_handlers.MoveDownRequestHandler;
 import one.spectra.better_chests.message_handlers.MoveUpRequestHandler;
 import one.spectra.better_chests.message_handlers.SortRequestHandler;
-import one.spectra.better_chests.message_handlers.messages.SortRequest;
 
 public class BetterChestsModule extends AbstractModule {
 
@@ -25,8 +23,6 @@ public class BetterChestsModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(InventoryFactory.class).to(SpectraInventoryFactory.class);
-        
-        bind(MessageHandlerHub.class).asEagerSingleton();
 
         bind(Sorter.class);
         bind(Mover.class);
@@ -37,7 +33,7 @@ public class BetterChestsModule extends AbstractModule {
         fillerBinder.addBinding().to(RowFiller.class);
         fillerBinder.addBinding().to(ColumnFiller.class);
 
-        Multibinder<MessageHandler> messageHandlerBinder = Multibinder.newSetBinder(binder(), MessageHandler.class);
+        var messageHandlerBinder = Multibinder.newSetBinder(binder(), MessageHandler.class);
         messageHandlerBinder.addBinding().to(SortRequestHandler.class);
         messageHandlerBinder.addBinding().to(MoveUpRequestHandler.class);
         messageHandlerBinder.addBinding().to(MoveDownRequestHandler.class);
