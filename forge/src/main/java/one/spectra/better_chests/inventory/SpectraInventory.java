@@ -77,9 +77,10 @@ public class SpectraInventory implements Inventory {
     }
 
     private net.minecraft.world.item.ItemStack addItem(net.minecraft.world.item.ItemStack itemStack) {
-        var indexesOfNonFullStacks = getIndexesOfNonFullStacks(itemStack.getItem());
+        var indexesOfNonFullStacks = getIndexesOfNonFullStacks(itemStack);
         var amountLeft = itemStack.getCount();
         var i = 0;
+
         while (amountLeft > 0 && i < indexesOfNonFullStacks.length) {
             var containerStack = _inventory.getItem(indexesOfNonFullStacks[i]);
             var ableToAdd = containerStack.getMaxStackSize() - containerStack.getCount();
@@ -106,12 +107,11 @@ public class SpectraInventory implements Inventory {
         return itemStack.getCount() > 0 ? itemStack : null;
     }
 
-    private int[] getIndexesOfNonFullStacks(net.minecraft.world.item.Item item) {
+    private int[] getIndexesOfNonFullStacks(net.minecraft.world.item.ItemStack stack) {
         var indexes = new ArrayList<Integer>();
         for (var i = 0; i < _inventory.getContainerSize(); i++) {
             var itemStackFromInventory = _inventory.getItem(i);
-            if (itemStackFromInventory.getItem() == item
-                    && itemStackFromInventory.getCount() < itemStackFromInventory.getMaxStackSize()) {
+            if (net.minecraft.world.item.ItemStack.isSameItemSameTags(stack, itemStackFromInventory) && itemStackFromInventory.getCount() < itemStackFromInventory.getMaxStackSize()) {
                 indexes.add(i);
             }
         }
