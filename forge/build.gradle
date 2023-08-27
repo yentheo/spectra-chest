@@ -130,7 +130,6 @@ jarJar.enable()
 // Configure the 'jarJar' task
 // 'all' is the default classifier
 tasks.named('jarJar') {
-    // ...
 }
 
 dependencies {

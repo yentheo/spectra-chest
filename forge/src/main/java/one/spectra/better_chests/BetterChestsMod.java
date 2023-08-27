@@ -14,10 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import one.spectra.better_chests.abstractions.communication.BetterChestsPacketHandler;
-import one.spectra.better_chests.abstractions.communication.JsonEncoder;
-import one.spectra.better_chests.message_handlers.SortRequestHandler;
-import one.spectra.better_chests.message_handlers.messages.SortRequest;
+import one.spectra.better_chests.message_handlers.MessageHandlerHub;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(BetterChestsMod.MODID)
@@ -40,18 +37,8 @@ public class BetterChestsMod {
     public void commonSetup(FMLCommonSetupEvent event) {
         LOGGER.info("Better Chests are enabled");
         var injector = Guice.createInjector(new BetterChestsModule());
-        var jsonEncoder = new JsonEncoder<SortRequest>(SortRequest.class);
-        BetterChestsPacketHandler.INSTANCE
-                .messageBuilder(SortRequest.class, 0)
-                .encoder(jsonEncoder)
-                .decoder(jsonEncoder)
-                .consumerMainThread((r, ctx) -> {
-                    ctx.get().enqueueWork(() -> {
-                        var player = ctx.get().getSender();
-                        injector.getInstance(SortRequestHandler.class).handle(player, r);
-                    });
-                    ctx.get().setPacketHandled(true);
-                }).add();
+        var messageHandlerHub = injector.getInstance(MessageHandlerHub.class);
+        messageHandlerHub.register();
 
     }
 
