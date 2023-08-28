@@ -1,9 +1,11 @@
 package one.spectra.better_chests;
 
+import org.slf4j.Logger;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
+import com.mojang.logging.LogUtils;
 
-import net.minecraft.server.MinecraftServer;
 import one.spectra.better_chests.inventory.InventoryFactory;
 import one.spectra.better_chests.inventory.SpectraInventoryFactory;
 import one.spectra.better_chests.inventory.fillers.ColumnFiller;
@@ -22,6 +24,7 @@ public class BetterChestsModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(Logger.class).toInstance(LogUtils.getLogger());
         bind(InventoryFactory.class).to(SpectraInventoryFactory.class);
 
         bind(Sorter.class);

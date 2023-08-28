@@ -19,7 +19,7 @@ public class InventoryFillerProvider {
         _defaultFiller = defaultFiller;
     }
 
-    public Filler getInventoryFiller(Inventory inventory, List<ItemStack> stacks) {
+    public Filler getInventoryFiller(Inventory inventory, List<List<ItemStack>> stacks) {
         return _fillers.stream().filter(x -> x.canFill(inventory, stacks)).findFirst().orElse(_defaultFiller);
     }
 }

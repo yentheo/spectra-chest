@@ -1,30 +1,33 @@
 package one.spectra.better_chests.inventory.fillers;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+import org.slf4j.Logger;
+
+import com.google.inject.Inject;
 
 import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.inventory.Inventory;
 
 public class DefaultFiller implements Filler {
 
-    @Override
-    public boolean canFill(Inventory inventory, List<ItemStack> stacks) {
-        return inventory.getSize() >= stacks.size();
+    private Logger _logger;
+
+    @Inject
+    public DefaultFiller(Logger logger) {
+        _logger = logger;
     }
 
     @Override
-    public void fill(Inventory inventory, List<ItemStack> stacks) {
-        var groups = stacks.stream().collect(Collectors.groupingBy(ItemStack::getMaterialKey)).entrySet()
-                .stream().sorted(Comparator.comparing(entry -> entry.getValue().size(), Comparator.reverseOrder()))
-                .map(x -> x.getValue().stream()
-                        .sorted(Comparator.comparing(stack -> stack.getAmount(), Comparator.reverseOrder())).toList())
-                .flatMap(x -> x.stream())
-                .toList();
+    public boolean canFill(Inventory inventory, List<List<ItemStack>> groups) {
+        return inventory.getSize() >= groups.size();
+    }
 
-        for (var index = 0; index < groups.size(); index++) {
-            inventory.putInSlot(index, groups.get(index));
+    @Override
+    public void fill(Inventory inventory, List<List<ItemStack>> groups) {                
+        List<ItemStack> flatStacks = groups.stream().flatMap(List::stream).toList();
+
+        for (var index = 0; index < flatStacks.size(); index++) {
+            inventory.putInSlot(index, flatStacks.get(index));
         }
     }
 

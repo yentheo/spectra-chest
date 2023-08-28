@@ -14,8 +14,11 @@ import one.spectra.better_chests.message_handlers.messages.SortRequest;
 
 public class BetterContainerScreen extends ContainerScreen {
 
-    public BetterContainerScreen(ChestMenu p_98409_, Inventory p_98410_, Component p_98411_) {
-        super(p_98409_, p_98410_, p_98411_);
+    private int _rowCount = 0;
+
+    public BetterContainerScreen(ChestMenu chestMenu, Inventory playerInventory, Component chestTitle) {
+        super(chestMenu, playerInventory, chestTitle);
+        this._rowCount = chestMenu.getRowCount();
         LogUtils.getLogger().info("Better container screen");
     }
 
@@ -23,11 +26,22 @@ public class BetterContainerScreen extends ContainerScreen {
     public void init() {
         super.init();
         var sortButtonImage = new ResourceLocation("better_chests:sort-button.png");
-        ImageButton sortButton = new ImageButton(this.leftPos + this.imageWidth - 20, this.topPos + 5, 13, 9, 0, 0,
-                0, sortButtonImage, 13, 18, e -> {
+        var sortButtonContainer = new ImageButton(this.leftPos + this.imageWidth - 20, this.topPos + 5, 13, 9, 0, 0, 9,
+                sortButtonImage, 13, 18, e -> {
                     BetterChestsPacketHandler.INSTANCE.sendToServer(new SortRequest(false));
+                    e.setFocused(false);
                 });
-        this.addRenderableWidget(sortButton);
+        this.addRenderableWidget(sortButtonContainer);
+
+        var containerHeight = _rowCount * 18;
+
+        var sortButtonInventory = new ImageButton(this.leftPos + this.imageWidth - 20, this.topPos + 5 + containerHeight + 14, 13, 9, 0, 0, 9,
+                sortButtonImage, 13, 18, e -> {
+                    BetterChestsPacketHandler.INSTANCE.sendToServer(new SortRequest(true));
+                    e.setFocused(false);
+                });
+        this.addRenderableWidget(sortButtonInventory);
+
     }
 
     @Override

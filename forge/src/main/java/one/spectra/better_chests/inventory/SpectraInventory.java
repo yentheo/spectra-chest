@@ -39,7 +39,9 @@ public class SpectraInventory implements Inventory {
     }
 
     public void clear() {
-        _inventory.clearContent();
+        for (var i = _skipSlots; i < _size + _skipSlots; i++) {
+            _inventory.setItem(i, net.minecraft.world.item.ItemStack.EMPTY);
+        }
     }
 
     public ArrayList<ItemStack> getItemStacks() {
@@ -109,9 +111,10 @@ public class SpectraInventory implements Inventory {
 
     private int[] getIndexesOfNonFullStacks(net.minecraft.world.item.ItemStack stack) {
         var indexes = new ArrayList<Integer>();
-        for (var i = 0; i < _inventory.getContainerSize(); i++) {
+        for (var i = _skipSlots; i < _size + _skipSlots; i++) {
             var itemStackFromInventory = _inventory.getItem(i);
-            if (net.minecraft.world.item.ItemStack.isSameItemSameTags(stack, itemStackFromInventory) && itemStackFromInventory.getCount() < itemStackFromInventory.getMaxStackSize()) {
+            if (net.minecraft.world.item.ItemStack.isSameItemSameTags(stack, itemStackFromInventory)
+                    && itemStackFromInventory.getCount() < itemStackFromInventory.getMaxStackSize()) {
                 indexes.add(i);
             }
         }
@@ -119,7 +122,7 @@ public class SpectraInventory implements Inventory {
     }
 
     private int getFirstEmptyIndex() {
-        for (var i = 0; i < _inventory.getContainerSize(); i++) {
+        for (var i = _skipSlots; i < _size + _skipSlots; i++) {
             var itemStackFromInventory = _inventory.getItem(i);
             if (itemStackFromInventory.isEmpty())
                 return i;

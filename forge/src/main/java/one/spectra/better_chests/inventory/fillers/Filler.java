@@ -6,6 +6,6 @@ import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.inventory.Inventory;
 
 public interface Filler {
-    boolean canFill(Inventory inventory, List<ItemStack> stacks);
-    void fill(Inventory inventory, List<ItemStack> stacks);
+    boolean canFill(Inventory inventory, List<List<ItemStack>> stacks);
+    void fill(Inventory inventory, List<List<ItemStack>> stacks);
 }
