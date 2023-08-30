@@ -18,21 +18,30 @@ public class RowFiller implements Filler {
     }
 
     @Override
-    public boolean canFill(Inventory inventory, List<List<ItemStack>> stacks) {
-        var maxGroupSize = stacks.stream().map(x -> x.size()).max(Integer::compare).orElse(0);
-        var columnsEnough = inventory.getColumns() >= maxGroupSize;
-        var rowsEnough = inventory.getRows() >= stacks.size();
+    public boolean canFill(Inventory inventory, List<List<ItemStack>> groups) {
+        double columnCountAsDouble = inventory.getColumns();
+        var rowsPerItem = groups.stream().map(x -> Math.ceil(x.size() / columnCountAsDouble));
+        var totalRowsNeeded = rowsPerItem.mapToInt(Double::intValue).sum();
 
-        return columnsEnough && rowsEnough;
+        return totalRowsNeeded <= inventory.getRows();
     }
 
     @Override
     public void fill(Inventory inventory, List<List<ItemStack>> groups) {
-        for (var rowIndex = 0; rowIndex < groups.size(); rowIndex++) {
-            var stacksInGroup = groups.get(rowIndex);
-            for (var columnIndex = 0; columnIndex < stacksInGroup.size(); columnIndex++) {
-                inventory.putInSlot(columnIndex + rowIndex * inventory.getColumns(), stacksInGroup.get(columnIndex));
+        _logger.info("Filling with row filler");
+        var rowIndex = 0;
+        for (var groupIndex = 0; groupIndex < groups.size(); groupIndex++) {
+            var stacksInGroup = groups.get(groupIndex);
+            var columnIndex = 0;
+            for (var stackIndex = 0; stackIndex < stacksInGroup.size(); stackIndex++) {
+                if (columnIndex == inventory.getColumns()) {
+                    columnIndex = 0;
+                    rowIndex++;
+                }
+                inventory.putInSlot(columnIndex + rowIndex * inventory.getColumns(), stacksInGroup.get(stackIndex));
+                columnIndex++;
             }
+            rowIndex++;
         }
     }
 

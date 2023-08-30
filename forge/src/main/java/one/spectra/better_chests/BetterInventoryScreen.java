@@ -3,12 +3,8 @@ package one.spectra.better_chests;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import one.spectra.better_chests.abstractions.communication.BetterChestsPacketHandler;
-import one.spectra.better_chests.message_handlers.messages.SortRequest;
 
 public class BetterInventoryScreen extends InventoryScreen {
 
@@ -20,7 +16,7 @@ public class BetterInventoryScreen extends InventoryScreen {
     public void init() {
         super.init();
 
-        var sortButtonImage = new ResourceLocation("better_chests:sort-button.png");        
+        // var sortButtonImage = new ResourceLocation("better_chests:sort-button.png");        
         // var sortButton = new ImageButton(this.leftPos + this.imageWidth - 20, this.topPos + 5, 13, 9, 0, 0, 9,
         //         sortButtonImage, 13, 18, e -> {
         //             BetterChestsPacketHandler.INSTANCE.sendToServer(new SortRequest(true));

@@ -1,9 +1,16 @@
 package one.spectra.better_chests;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
+import com.google.inject.name.Names;
 import com.mojang.logging.LogUtils;
 
 import one.spectra.better_chests.inventory.InventoryFactory;
@@ -18,9 +25,11 @@ import one.spectra.better_chests.message_handlers.MoveDownRequestHandler;
 import one.spectra.better_chests.message_handlers.MoveUpRequestHandler;
 import one.spectra.better_chests.message_handlers.SortRequestHandler;
 
+@ExcludeFromGeneratedCoverageReport
 public class BetterChestsModule extends AbstractModule {
 
-    public BetterChestsModule() {    }
+    public BetterChestsModule() {
+    }
 
     @Override
     protected void configure() {
@@ -30,11 +39,26 @@ public class BetterChestsModule extends AbstractModule {
         bind(Sorter.class);
         bind(Mover.class);
         bind(InventoryFillerProvider.class);
-        bind(DefaultFiller.class);
+        bind(Filler.class).annotatedWith(Names.named("defaultFiller")).to(DefaultFiller.class);
+        bind(RowFiller.class);
+        bind(ColumnFiller.class);
 
-        Multibinder<Filler> fillerBinder = Multibinder.newSetBinder(binder(), Filler.class);
-        fillerBinder.addBinding().to(RowFiller.class);
-        fillerBinder.addBinding().to(ColumnFiller.class);
+        bind(new TypeLiteral<List<Filler>>() {
+        }).toProvider(new Provider<List<Filler>>() {
+
+            @Inject
+            RowFiller rowFiller;
+            @Inject
+            ColumnFiller columnFiller;
+
+            @Override
+            public List<Filler> get() {
+                var fillers = new ArrayList<Filler>();
+                fillers.add(rowFiller);
+                fillers.add(columnFiller);
+                return fillers;
+            }
+        });
 
         var messageHandlerBinder = Multibinder.newSetBinder(binder(), MessageHandler.class);
         messageHandlerBinder.addBinding().to(SortRequestHandler.class);

@@ -18,6 +18,7 @@ import one.spectra.better_chests.message_handlers.MessageHandlerHub;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(BetterChestsMod.MODID)
+@ExcludeFromGeneratedCoverageReport
 public class BetterChestsMod {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "better_chests_mod";

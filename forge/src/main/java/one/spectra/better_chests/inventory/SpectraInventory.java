@@ -3,10 +3,12 @@ package one.spectra.better_chests.inventory;
 import java.util.ArrayList;
 import java.util.List;
 
+import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
 import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.abstractions.SpectraItemStack;
 import net.minecraft.world.item.Items;
 
+@ExcludeFromGeneratedCoverageReport
 public class SpectraInventory implements Inventory {
     private net.minecraft.world.Container _inventory;
     private int _skipSlots;

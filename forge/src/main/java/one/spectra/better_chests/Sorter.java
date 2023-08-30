@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 
 import com.google.inject.Inject;
-import com.mojang.logging.LogUtils;
 
 import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.inventory.Inventory;
@@ -29,6 +28,7 @@ public class Sorter {
     }
 
     public void sort(Inventory inventory) {
+        _logger.info("Sorting inventory");
         var itemStacks = inventory.getItemStacks();
 
         var tempInventory = this._inventoryFactory.create(inventory.getSize());
@@ -54,8 +54,11 @@ public class Sorter {
                         .sorted(Comparator.comparing(stack -> stack.getAmount(), Comparator.reverseOrder())).toList()
                         .stream().toList())
                 .toList();
+        _logger.info("Made " + groupedStacks.size() + " groups of items.");
 
         var filler = _inventoryFillerProvider.getInventoryFiller(inventory, groupedStacks);
+
+        _logger.info("Filling with " + filler.getClass().getSimpleName());
         filler.fill(inventory, groupedStacks);
     }
 }

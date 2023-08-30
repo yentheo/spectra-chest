@@ -5,10 +5,12 @@ import java.util.logging.Logger;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
+import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
 import one.spectra.better_chests.abstractions.communication.BetterChestsPacketHandler;
 import one.spectra.better_chests.abstractions.communication.JsonEncoder;
 import one.spectra.better_chests.message_handlers.messages.SortRequest;
 
+@ExcludeFromGeneratedCoverageReport
 public class MessageHandlerHub {
     private Injector _injector;
     private Logger _logger;

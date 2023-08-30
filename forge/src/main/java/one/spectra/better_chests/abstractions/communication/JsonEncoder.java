@@ -6,10 +6,11 @@ import java.util.function.Function;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mojang.logging.LogUtils;
 
 import net.minecraft.network.FriendlyByteBuf;
+import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
 
+@ExcludeFromGeneratedCoverageReport
 public class JsonEncoder<T> implements BiConsumer<T, FriendlyByteBuf>, Function<FriendlyByteBuf, T> {
 
     private Class<T> _clazz;

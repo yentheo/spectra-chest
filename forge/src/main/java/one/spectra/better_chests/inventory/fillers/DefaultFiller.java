@@ -19,7 +19,8 @@ public class DefaultFiller implements Filler {
 
     @Override
     public boolean canFill(Inventory inventory, List<List<ItemStack>> groups) {
-        return inventory.getSize() >= groups.size();
+        var stacks = groups.stream().flatMap(List::stream).toList();
+        return inventory.getSize() >= stacks.size();
     }
 
     @Override

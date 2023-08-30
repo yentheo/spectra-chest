@@ -2,6 +2,9 @@ package one.spectra.better_chests.inventory;
 
 import com.google.inject.Inject;
 
+import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
+
+@ExcludeFromGeneratedCoverageReport
 public class SpectraInventoryFactory implements InventoryFactory {
 
     @Inject

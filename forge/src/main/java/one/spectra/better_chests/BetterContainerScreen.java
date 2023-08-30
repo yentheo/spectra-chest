@@ -12,6 +12,7 @@ import net.minecraft.world.inventory.ChestMenu;
 import one.spectra.better_chests.abstractions.communication.BetterChestsPacketHandler;
 import one.spectra.better_chests.message_handlers.messages.SortRequest;
 
+@ExcludeFromGeneratedCoverageReport
 public class BetterContainerScreen extends ContainerScreen {
 
     private int _rowCount = 0;

@@ -7,6 +7,7 @@ import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+@ExcludeFromGeneratedCoverageReport
 public class ScreenEvents {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void mainScreenEvent(ScreenEvent.Opening event) {
