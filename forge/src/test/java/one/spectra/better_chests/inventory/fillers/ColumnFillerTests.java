@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import one.spectra.better_chests.FakeItemStack;
 import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.inventory.Inventory;
+import one.spectra.better_chests.inventory.Spreader;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -29,9 +30,12 @@ public class ColumnFillerTests {
 
     private ColumnFiller _sut;
 
+    private Spreader _spreader;
+
     @BeforeEach
     public void setUp() {
-        _sut = new ColumnFiller(mock(Logger.class));
+        _spreader = mock(Spreader.class);
+        _sut = new ColumnFiller(_spreader, mock(Logger.class));
     }
 
     @Test
@@ -50,7 +54,7 @@ public class ColumnFillerTests {
         when(myInventory.getColumns()).thenReturn(9);
         when(myInventory.getRows()).thenReturn(3);
 
-        _sut.fill(myInventory, groups);
+        _sut.fill(myInventory, groups, false);
 
         verify(myInventory).putInSlot(eq(0), argThat(x -> x.getAmount() == 3 && x.getMaterialKey() == "Wood"));
         verify(myInventory).putInSlot(eq(9), argThat(x -> x.getAmount() == 64 && x.getMaterialKey() == "Wood"));
@@ -76,7 +80,7 @@ public class ColumnFillerTests {
         when(myInventory.getColumns()).thenReturn(9);        
         when(myInventory.getRows()).thenReturn(3);
 
-        _sut.fill(myInventory, groups);
+        _sut.fill(myInventory, groups, false);
 
         verify(myInventory).putInSlot(eq(0), argThat(x -> x.getAmount() == 3 && x.getMaterialKey() == "Wood"));
         verify(myInventory).putInSlot(eq(9), argThat(x -> x.getAmount() == 64 && x.getMaterialKey() == "Wood"));
@@ -237,7 +241,7 @@ public class ColumnFillerTests {
         when(myInventory.getColumns()).thenReturn(9);
         when(myInventory.getRows()).thenReturn(3);
 
-        _sut.fill(myInventory, groups);
+        _sut.fill(myInventory, groups, false);
 
         InOrder inOrder = inOrder(myInventory);
 

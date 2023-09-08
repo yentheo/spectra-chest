@@ -18,6 +18,7 @@ import one.spectra.better_chests.message_handlers.messages.ConfigureCurrentChest
 import one.spectra.better_chests.message_handlers.messages.GetConfigurationRequest;
 import one.spectra.better_chests.message_handlers.messages.GetConfigurationResponse;
 
+@ExcludeFromGeneratedCoverageReport
 public class ContainerConfigurationScreen extends Screen {
 
     private Checkbox _spreadCheckbox;

@@ -6,11 +6,14 @@ import java.util.List;
 import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
 import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.abstractions.SpectraItemStack;
+import one.spectra.better_chests.message_handlers.messages.Configuration;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 
 @ExcludeFromGeneratedCoverageReport
 public class SpectraInventory implements Inventory {
     private net.minecraft.world.Container _inventory;
+    private Configuration _configuration;
     private int _skipSlots;
     private int _size;
 
@@ -26,6 +29,15 @@ public class SpectraInventory implements Inventory {
         _inventory = inventory;
         _skipSlots = skipSlots;
         _size = size;
+        _configuration = new Configuration();
+        if (_inventory instanceof ChestBlockEntity) {
+            var data = ((ChestBlockEntity) _inventory).getPersistentData();
+            _configuration.spread = data.getBoolean("better_chests:spread");
+        }
+    }
+
+    public boolean getSpread() {
+        return this._configuration.spread;
     }
 
     public int getSize() {

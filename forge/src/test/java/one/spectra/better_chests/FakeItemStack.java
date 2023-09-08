@@ -31,4 +31,10 @@ public class FakeItemStack implements ItemStack {
     public String toString() {
         return this.getMaterialKey() + ": " + this.getAmount();
     }
+
+    @Override
+    public ItemStack takeOne() {
+        this._amount -= 1;
+        return new FakeItemStack(1, _materialKey);
+    }
 }

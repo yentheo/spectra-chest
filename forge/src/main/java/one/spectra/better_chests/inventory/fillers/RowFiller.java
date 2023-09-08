@@ -7,13 +7,16 @@ import com.google.inject.Inject;
 
 import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.inventory.Inventory;
+import one.spectra.better_chests.inventory.Spreader;
 
 public class RowFiller implements Filler {
 
+    private Spreader _spreader;
     private Logger _logger;
 
     @Inject
-    public RowFiller(Logger logger) {
+    public RowFiller(Spreader spreader, Logger logger) {
+        _spreader = spreader;
         _logger = logger;
     }
 
@@ -27,8 +30,11 @@ public class RowFiller implements Filler {
     }
 
     @Override
-    public void fill(Inventory inventory, List<List<ItemStack>> groups) {
+    public void fill(Inventory inventory, List<List<ItemStack>> groups, boolean spread) {
         _logger.info("Filling with row filler");
+        if (spread) {
+            groups = _spreader.spread(groups, inventory.getColumns());
+        }
         var rowIndex = 0;
         for (var groupIndex = 0; groupIndex < groups.size(); groupIndex++) {
             var stacksInGroup = groups.get(groupIndex);

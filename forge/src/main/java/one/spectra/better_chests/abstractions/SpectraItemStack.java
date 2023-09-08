@@ -22,4 +22,11 @@ public class SpectraItemStack implements ItemStack {
     public net.minecraft.world.item.ItemStack getItemStack() {
         return this._itemStack;
     }
+
+    @Override
+    public ItemStack takeOne() {
+        this._itemStack.shrink(1);
+        var newStack = new net.minecraft.world.item.ItemStack(this._itemStack.getItem(), 1, this._itemStack.getTag());
+        return new SpectraItemStack(newStack);
+    }
 }

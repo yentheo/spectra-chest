@@ -15,6 +15,7 @@ import com.mojang.logging.LogUtils;
 
 import one.spectra.better_chests.inventory.InventoryFactory;
 import one.spectra.better_chests.inventory.SpectraInventoryFactory;
+import one.spectra.better_chests.inventory.Spreader;
 import one.spectra.better_chests.inventory.fillers.ColumnFiller;
 import one.spectra.better_chests.inventory.fillers.DefaultFiller;
 import one.spectra.better_chests.inventory.fillers.Filler;
@@ -40,6 +41,7 @@ public class BetterChestsModule extends AbstractModule {
         bind(InventoryFactory.class).to(SpectraInventoryFactory.class);
 
         bind(Sorter.class);
+        bind(Spreader.class);
         bind(Mover.class);
         bind(InventoryFillerProvider.class);
         bind(Filler.class).annotatedWith(Names.named("defaultFiller")).to(DefaultFiller.class);

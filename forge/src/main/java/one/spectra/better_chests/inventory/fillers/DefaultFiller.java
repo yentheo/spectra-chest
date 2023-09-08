@@ -25,7 +25,7 @@ public class DefaultFiller implements Filler {
     }
 
     @Override
-    public void fill(Inventory inventory, List<List<ItemStack>> groups) {                
+    public void fill(Inventory inventory, List<List<ItemStack>> groups, boolean spread) {
         _logger.info("Filling with default filler");
         List<ItemStack> flatStacks = groups.stream().flatMap(List::stream).toList();
 

@@ -59,6 +59,6 @@ public class Sorter {
         var filler = _inventoryFillerProvider.getInventoryFiller(inventory, groupedStacks);
 
         _logger.info("Filling with " + filler.getClass().getSimpleName());
-        filler.fill(inventory, groupedStacks);
+        filler.fill(inventory, groupedStacks, inventory.getSpread());
     }
 }

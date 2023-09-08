@@ -6,6 +6,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.world.entity.player.Player;
 
+@ExcludeFromGeneratedCoverageReport
 public class BetterInventoryScreen extends InventoryScreen {
 
     public BetterInventoryScreen(Player player) {

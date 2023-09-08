@@ -45,7 +45,7 @@ public class DefaultFillerTests {
         
         var myInventory = mock(Inventory.class);
 
-        _sut.fill(myInventory, groups);
+        _sut.fill(myInventory, groups, false);
 
         verify(myInventory).putInSlot(eq(0), argThat(x -> x.getAmount() == 3 && x.getMaterialKey() == "Wood"));
         verify(myInventory).putInSlot(eq(1), argThat(x -> x.getAmount() == 64 && x.getMaterialKey() == "Wood"));
