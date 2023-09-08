@@ -9,6 +9,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
+import one.spectra.better_chests.abstractions.SpectraPlayer;
 import one.spectra.better_chests.abstractions.communication.BetterChestsPacketHandler;
 import one.spectra.better_chests.abstractions.communication.JsonEncoder;
 import one.spectra.better_chests.message_handlers.messages.ConfigureCurrentChestRequest;
@@ -53,7 +54,7 @@ public class MessageHandlerHub {
                 .consumerMainThread((m, ctx) -> {
                     ctx.get().enqueueWork(() -> {
                         var player = ctx.get().getSender();
-                        handler.handle(player, m);
+                        handler.handle(new SpectraPlayer(player), m);
                         var oneTimeConsumer = _oneTimeConsumers.get(messageClass);
                         if (oneTimeConsumer != null) {
                             oneTimeConsumer.accept(m);

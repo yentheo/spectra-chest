@@ -36,6 +36,18 @@ public class SpectraInventory implements Inventory {
         }
     }
 
+    public Configuration geConfiguration() {
+        return _configuration;
+    }
+
+    public void setSpread(boolean value) {
+        if (_inventory instanceof ChestBlockEntity) {
+            var data = ((ChestBlockEntity) _inventory).getPersistentData();
+            data.putBoolean("better_chests:spread", value);
+            _configuration.spread = value;
+        }
+    }
+
     public boolean getSpread() {
         return this._configuration.spread;
     }

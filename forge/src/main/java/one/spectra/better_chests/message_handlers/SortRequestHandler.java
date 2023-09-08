@@ -1,14 +1,8 @@
 package one.spectra.better_chests.message_handlers;
 
 import com.google.inject.Inject;
-import com.mojang.logging.LogUtils;
-
-import net.minecraft.world.Container;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import one.spectra.better_chests.Sorter;
-import one.spectra.better_chests.inventory.SpectraInventory;
+import one.spectra.better_chests.abstractions.Player;
 import one.spectra.better_chests.message_handlers.messages.SortRequest;
 
 public class SortRequestHandler implements MessageHandler<SortRequest> {
@@ -22,20 +16,7 @@ public class SortRequestHandler implements MessageHandler<SortRequest> {
 
     @Override
     public void handle(Player player, SortRequest message) {
-        var inventory = message.sortPlayerInventory
-                ? new SpectraInventory(player.getInventory())
-                : new SpectraInventory(getOpenContainer(player));
-
+        var inventory = message.sortPlayerInventory ? player.getInventory() : player.getOpenContainer();
         _sorter.sort(inventory);
-    }
-
-    private Container getOpenContainer(Player player) {
-        if (player.hasContainerOpen()) {
-            if (player.containerMenu instanceof ChestMenu) {
-                var chestMenu = (ChestMenu) player.containerMenu;
-                return chestMenu.getContainer();
-            }
-        }
-        return null;
     }
 }
