@@ -1,6 +1,7 @@
 package one.spectra.better_chests;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -37,7 +38,7 @@ public class SorterTests {
         fakeContents.add(itemStackOne);
         fakeContents.add(itemStackTwo);
 
-        when(inventoryFillerProvider.getInventoryFiller(eq(myInventory), any(List.class))).thenReturn(filler);
+        when(inventoryFillerProvider.getInventoryFiller(eq(myInventory), anyList())).thenReturn(filler);
 
         when(inventoryFactory.create(any(Integer.class))).thenReturn(tempInventory);
         when(myInventory.getItemStacks()).thenReturn(fakeContents);

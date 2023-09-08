@@ -1,6 +1,6 @@
 package one.spectra.better_chests.message_handlers.messages;
 
-public class SortRequest {
+public class SortRequest implements Message {
     public boolean sortPlayerInventory = false;
 
     public SortRequest() {

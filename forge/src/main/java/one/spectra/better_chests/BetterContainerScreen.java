@@ -2,6 +2,7 @@ package one.spectra.better_chests;
 
 import com.mojang.logging.LogUtils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
@@ -27,21 +28,27 @@ public class BetterContainerScreen extends ContainerScreen {
     public void init() {
         super.init();
         var sortButtonImage = new ResourceLocation("better_chests:sort-button.png");
-        var sortButtonContainer = new ImageButton(this.leftPos + this.imageWidth - 20, this.topPos + 5, 13, 9, 0, 0, 9,
+        var sortContainerButton = new ImageButton(this.leftPos + this.imageWidth - 20, this.topPos + 5, 13, 9, 0, 0, 9,
                 sortButtonImage, 13, 18, e -> {
                     BetterChestsPacketHandler.INSTANCE.sendToServer(new SortRequest(false));
-                    e.setFocused(false);
                 });
-        this.addRenderableWidget(sortButtonContainer);
+        this.addRenderableWidget(sortContainerButton);
+        var gearIconImage = new ResourceLocation("better_chests:gear-icon.png");
+        var configurationButton = new ImageButton(this.leftPos + this.imageWidth, this.topPos + 5, 9, 9, 0, 0, 9,
+                gearIconImage, 9, 18, e -> {
+                    Minecraft.getInstance().setScreen(new ContainerConfigurationScreen(Component.literal("Configuration Screen"), this));
+                });
+        this.addRenderableWidget(configurationButton);
 
         var containerHeight = _rowCount * 18;
 
-        var sortButtonInventory = new ImageButton(this.leftPos + this.imageWidth - 20, this.topPos + 5 + containerHeight + 14, 13, 9, 0, 0, 9,
+        var sortInventoryButton = new ImageButton(this.leftPos + this.imageWidth - 20,
+                this.topPos + 5 + containerHeight + 14, 13, 9, 0, 0, 9,
                 sortButtonImage, 13, 18, e -> {
                     BetterChestsPacketHandler.INSTANCE.sendToServer(new SortRequest(true));
                     e.setFocused(false);
                 });
-        this.addRenderableWidget(sortButtonInventory);
+        this.addRenderableWidget(sortInventoryButton);
 
     }
 

@@ -64,7 +64,7 @@
         "hostName": "localhost",
         "port": 4000,
         "processId": "${command:PickJavaProcess}"
-    }
+    },
     {
         "type": "java",
         "name": "Attach to client",

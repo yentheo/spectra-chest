@@ -18,5 +18,4 @@ public class ScreenEvents {
             event.setNewScreen(new BetterContainerScreen(containerScreen.getMenu(), new Inventory(minecraft.player), containerScreen.getTitle()));
         }
     }
-
 }

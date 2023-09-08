@@ -3,6 +3,7 @@ package one.spectra.better_chests;
 import org.slf4j.Logger;
 
 import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.mojang.logging.LogUtils;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -23,6 +24,7 @@ public class BetterChestsMod {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "better_chests_mod";
     private static final Logger LOGGER = LogUtils.getLogger();
+    public static Injector INJECTOR;
 
     public BetterChestsMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -37,8 +39,8 @@ public class BetterChestsMod {
 
     public void commonSetup(FMLCommonSetupEvent event) {
         LOGGER.info("Better Chests are enabled");
-        var injector = Guice.createInjector(new BetterChestsModule());
-        var messageHandlerHub = injector.getInstance(MessageHandlerHub.class);
+        INJECTOR = Guice.createInjector(new BetterChestsModule());
+        var messageHandlerHub = INJECTOR.getInstance(MessageHandlerHub.class);
         messageHandlerHub.register();
 
     }
