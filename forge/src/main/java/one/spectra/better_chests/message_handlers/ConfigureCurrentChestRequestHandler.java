@@ -1,5 +1,6 @@
 package one.spectra.better_chests.message_handlers;
 
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 import com.google.inject.Inject;
@@ -22,7 +23,9 @@ public class ConfigureCurrentChestRequestHandler implements MessageHandler<Confi
         var openInventory = player.getOpenContainer();
         if (openInventory != null) {
             openInventory.setSpread(message.configuration.spread);
-            _logger.info("Set config");
+            Executors.newCachedThreadPool().submit(() -> {
+                _logger.info("Set config");
+            });
         }
     }
 }

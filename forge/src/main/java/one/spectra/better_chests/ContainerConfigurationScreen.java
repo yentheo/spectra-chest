@@ -63,6 +63,15 @@ public class ContainerConfigurationScreen extends Screen {
     }
 
     @Override
+    public boolean keyPressed(int p_96552_, int p_96553_, int p_96554_) {
+        if (p_96552_ == 256 && this.shouldCloseOnEsc()) {
+            Minecraft.getInstance().setScreen(_parentScreen);
+            return true;
+        }
+        return super.keyPressed(p_96552_, p_96553_, p_96554_);
+    }
+
+    @Override
     public void render(GuiGraphics huh, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(huh);
         super.render(huh, mouseX, mouseY, partialTick);
