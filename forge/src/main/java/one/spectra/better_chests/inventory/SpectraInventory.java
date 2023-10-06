@@ -7,7 +7,9 @@ import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
 import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.abstractions.SpectraItemStack;
 import one.spectra.better_chests.message_handlers.messages.Configuration;
+import net.minecraft.world.CompoundContainer;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 
 @ExcludeFromGeneratedCoverageReport
@@ -30,9 +32,10 @@ public class SpectraInventory implements Inventory {
         _skipSlots = skipSlots;
         _size = size;
         _configuration = new Configuration();
-        if (_inventory instanceof ChestBlockEntity) {
-            var data = ((ChestBlockEntity) _inventory).getPersistentData();
-            _configuration.spread = data.getBoolean("better_chests:spread");
+        var blockEntity = getBlockEntity();
+        if (blockEntity != null) {
+            var data = blockEntity.getPersistentData();
+            _configuration.spread = data.getBoolean("better_chests:spread");;
         }
     }
 
@@ -41,11 +44,35 @@ public class SpectraInventory implements Inventory {
     }
 
     public void setSpread(boolean value) {
-        if (_inventory instanceof ChestBlockEntity) {
-            var data = ((ChestBlockEntity) _inventory).getPersistentData();
+        var blockEntity = getBlockEntity();
+        if (blockEntity != null) {
+            var data = blockEntity.getPersistentData();
             data.putBoolean("better_chests:spread", value);
             _configuration.spread = value;
         }
+    }
+
+    private BlockEntity getBlockEntity() {
+        if (_inventory instanceof ChestBlockEntity) {
+            return (ChestBlockEntity)_inventory;
+        } else if (_inventory instanceof CompoundContainer) {
+            var compoundContainer = (CompoundContainer) _inventory;
+            return getFirstContainer(compoundContainer);
+        } else {
+            return null;
+        }
+    }
+
+    private ChestBlockEntity getFirstContainer(CompoundContainer container) {
+        try {
+            var containerField = CompoundContainer.class.getDeclaredField("container1");
+            containerField.setAccessible(true);
+            return (ChestBlockEntity) containerField.get(container);
+        } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public boolean getSpread() {
