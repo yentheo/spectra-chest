@@ -1,13 +1,17 @@
 package one.spectra.better_chests.inventory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import com.mojang.logging.LogUtils;
 
 import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
 import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.abstractions.SpectraItemStack;
 import one.spectra.better_chests.message_handlers.messages.Configuration;
 import net.minecraft.world.CompoundContainer;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
@@ -35,7 +39,7 @@ public class SpectraInventory implements Inventory {
         var blockEntity = getBlockEntity();
         if (blockEntity != null) {
             var data = blockEntity.getPersistentData();
-            _configuration.spread = data.getBoolean("better_chests:spread");;
+            _configuration.spread = data.getBoolean("better_chests:spread");
         }
     }
 
@@ -54,7 +58,7 @@ public class SpectraInventory implements Inventory {
 
     private BlockEntity getBlockEntity() {
         if (_inventory instanceof ChestBlockEntity) {
-            return (ChestBlockEntity)_inventory;
+            return (ChestBlockEntity) _inventory;
         } else if (_inventory instanceof CompoundContainer) {
             var compoundContainer = (CompoundContainer) _inventory;
             return getFirstContainer(compoundContainer);
@@ -65,10 +69,16 @@ public class SpectraInventory implements Inventory {
 
     private ChestBlockEntity getFirstContainer(CompoundContainer container) {
         try {
-            var containerField = CompoundContainer.class.getDeclaredField("container1");
-            containerField.setAccessible(true);
-            return (ChestBlockEntity) containerField.get(container);
-        } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
+            var allFields = CompoundContainer.class.getDeclaredFields();
+            LogUtils.getLogger().info("Found " + allFields.length + " fields");
+            var firstChestBlock = Arrays.stream(allFields).filter(x -> x.getType() == Container.class)
+                    .findFirst();
+            if (firstChestBlock.isPresent()) {
+                LogUtils.getLogger().info("Found field " + firstChestBlock.get().getName());
+                firstChestBlock.get().setAccessible(true);
+                return (ChestBlockEntity) firstChestBlock.get().get(container);
+            }
+        } catch (SecurityException | IllegalAccessException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
