@@ -9,7 +9,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
-import one.spectra.better_chests.abstractions.SpectraPlayer;
+import one.spectra.better_chests.abstractions.PlayerFactory;
 import one.spectra.better_chests.abstractions.communication.BetterChestsPacketHandler;
 import one.spectra.better_chests.abstractions.communication.JsonEncoder;
 import one.spectra.better_chests.message_handlers.messages.ConfigureCurrentChestRequest;
@@ -22,15 +22,17 @@ import one.spectra.better_chests.message_handlers.messages.SortRequest;
 public class MessageHandlerHub {
     private Injector _injector;
     private Logger _logger;
+    private PlayerFactory _playerFactory;
 
     private static int MessageId = 0;
 
     private Dictionary<Class<Message>, Consumer<Message>> _oneTimeConsumers;
 
     @Inject
-    public MessageHandlerHub(Injector injector, Logger logger) {
+    public MessageHandlerHub(Injector injector, PlayerFactory playerFactory, Logger logger) {
         _injector = injector;
         _logger = logger;
+        _playerFactory = playerFactory;
         _oneTimeConsumers = new Hashtable<Class<Message>, Consumer<Message>>();
     }
 
@@ -54,7 +56,8 @@ public class MessageHandlerHub {
                 .consumerMainThread((m, ctx) -> {
                     ctx.get().enqueueWork(() -> {
                         var player = ctx.get().getSender();
-                        handler.handle(new SpectraPlayer(player), m);
+                        
+                        handler.handle(player != null ? _playerFactory.createPlayer(player) : null, m);
                         var oneTimeConsumer = _oneTimeConsumers.get(messageClass);
                         if (oneTimeConsumer != null) {
                             oneTimeConsumer.accept(m);

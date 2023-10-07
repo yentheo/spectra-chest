@@ -11,17 +11,17 @@ import com.google.inject.Inject;
 
 import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.inventory.Inventory;
-import one.spectra.better_chests.inventory.InventoryFactory;
+import one.spectra.better_chests.inventory.InventoryCreator;
 import one.spectra.better_chests.inventory.fillers.InventoryFillerProvider;
 
 public class Sorter {
 
-    private InventoryFactory _inventoryFactory;
+    private InventoryCreator _inventoryFactory;
     private InventoryFillerProvider _inventoryFillerProvider;
     private Logger _logger;
 
     @Inject
-    public Sorter(InventoryFactory inventoryFactory, InventoryFillerProvider inventoryFillerProvider, Logger logger) {
+    public Sorter(InventoryCreator inventoryFactory, InventoryFillerProvider inventoryFillerProvider, Logger logger) {
         _inventoryFactory = inventoryFactory;
         _inventoryFillerProvider = inventoryFillerProvider;
         _logger = logger;

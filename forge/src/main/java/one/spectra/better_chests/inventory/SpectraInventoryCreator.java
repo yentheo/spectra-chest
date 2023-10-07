@@ -2,19 +2,26 @@ package one.spectra.better_chests.inventory;
 
 import com.google.inject.Inject;
 
+import net.minecraft.world.Container;
 import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
 
 @ExcludeFromGeneratedCoverageReport
-public class SpectraInventoryFactory implements InventoryFactory {
+public class SpectraInventoryCreator implements InventoryCreator {
+
+    private InventoryFactory _inventoryFactory;
 
     @Inject
-    public SpectraInventoryFactory() {
+    public SpectraInventoryCreator(InventoryFactory inventoryFactory) {
+        _inventoryFactory = inventoryFactory;
     }
 
-    @Override
     public Inventory create(int size) {
         var memoryInventory = new net.minecraft.world.SimpleContainer(size);
-        return new SpectraInventory(memoryInventory);
+        return this.create(memoryInventory);
+    }
+
+    public Inventory create(Container container) {
+        return _inventoryFactory.create(container);
     }
 
     public Inventory create(Inventory inventory) {

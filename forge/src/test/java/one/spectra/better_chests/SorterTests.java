@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 
 import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.inventory.Inventory;
-import one.spectra.better_chests.inventory.InventoryFactory;
+import one.spectra.better_chests.inventory.InventoryCreator;
 import one.spectra.better_chests.inventory.fillers.Filler;
 import one.spectra.better_chests.inventory.fillers.InventoryFillerProvider;
 
@@ -27,7 +27,7 @@ public class SorterTests {
     @Test
     void sort_sortsTheGivenInventory() {
         var inventoryFillerProvider = mock(InventoryFillerProvider.class);
-        var inventoryFactory = mock(InventoryFactory.class);
+        var inventoryFactory = mock(InventoryCreator.class);
         var filler = mock(Filler.class);
         var tempInventory = mock(Inventory.class);
         var myInventory = mock(Inventory.class);

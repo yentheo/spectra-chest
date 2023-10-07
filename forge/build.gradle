@@ -143,6 +143,9 @@ dependencies {
     implementation ('com.google.inject:guice:7.0.0') {
         exclude group: 'com.google.guava', module: 'guava'
     }
+    implementation ('com.google.inject.extensions:guice-assistedinject:7.0.0') {
+        exclude group: 'com.google.guava', module: 'guava'
+    }
     implementation 'jakarta.inject:jakarta.inject-api:2.0.1'
     implementation 'aopalliance:aopalliance:1.0'
     
@@ -153,6 +156,7 @@ dependencies {
     jarJar("com.google.inject:guice:[7.0.0]") {
         exclude(group: 'com.google.guava')
     }
+    jarJar 'com.google.inject.extensions:guice-assistedinject:[7.0.0]'
     jarJar 'jakarta.inject:jakarta.inject-api:[2.0.1]'
     jarJar 'aopalliance:aopalliance:[1.0]'
 
@@ -161,6 +165,9 @@ dependencies {
     jarJar 'com.fasterxml.jackson.core:jackson-databind:[2.0.1]'
 
     minecraftLibrary ('com.google.inject:guice:7.0.0') {
+        exclude group: 'com.google.guava', module: 'guava'
+    }
+    minecraftLibrary ('com.google.inject.extensions:guice-assistedinject:7.0.0') {
         exclude group: 'com.google.guava', module: 'guava'
     }
     minecraftLibrary 'jakarta.inject:jakarta.inject-api:2.0.1'

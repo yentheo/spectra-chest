@@ -3,7 +3,10 @@ package one.spectra.better_chests.inventory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import org.slf4j.Logger;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+import com.google.inject.assistedinject.AssistedInject;
 import com.mojang.logging.LogUtils;
 
 import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
@@ -23,15 +26,20 @@ public class SpectraInventory implements Inventory {
     private int _skipSlots;
     private int _size;
 
-    public SpectraInventory(net.minecraft.world.entity.player.Inventory playerInventory) {
-        this(playerInventory, 9, 27);
+    private Logger _logger;
+
+    @AssistedInject
+    public SpectraInventory(@Assisted net.minecraft.world.entity.player.Inventory playerInventory, Logger logger) {
+        this(playerInventory, 9, 27, logger);
     }
 
-    public SpectraInventory(net.minecraft.world.Container inventory) {
-        this(inventory, 0, inventory.getContainerSize());
+    @AssistedInject
+    public SpectraInventory(@Assisted net.minecraft.world.Container inventory, Logger logger) {
+        this(inventory, 0, inventory.getContainerSize(), logger);
     }
 
-    private SpectraInventory(net.minecraft.world.Container inventory, int skipSlots, int size) {
+    private SpectraInventory(net.minecraft.world.Container inventory, int skipSlots, int size, Logger logger) {
+        _logger = logger;
         _inventory = inventory;
         _skipSlots = skipSlots;
         _size = size;
@@ -68,13 +76,13 @@ public class SpectraInventory implements Inventory {
     }
 
     private ChestBlockEntity getFirstContainer(CompoundContainer container) {
+        _logger.info("Getting first container of compound container");
         try {
             var allFields = CompoundContainer.class.getDeclaredFields();
-            LogUtils.getLogger().info("Found " + allFields.length + " fields");
-            var firstChestBlock = Arrays.stream(allFields).filter(x -> x.getType() == Container.class)
-                    .findFirst();
+            _logger.info("Found " + allFields.length + " fields");
+            var firstChestBlock = Arrays.stream(allFields).filter(x -> x.getType() == Container.class).findFirst();
             if (firstChestBlock.isPresent()) {
-                LogUtils.getLogger().info("Found field " + firstChestBlock.get().getName());
+                _logger.info("Found field " + firstChestBlock.get().getName());
                 firstChestBlock.get().setAccessible(true);
                 return (ChestBlockEntity) firstChestBlock.get().get(container);
             }
@@ -176,8 +184,7 @@ public class SpectraInventory implements Inventory {
         var indexes = new ArrayList<Integer>();
         for (var i = _skipSlots; i < _size + _skipSlots; i++) {
             var itemStackFromInventory = _inventory.getItem(i);
-            if (net.minecraft.world.item.ItemStack.isSameItemSameTags(stack, itemStackFromInventory)
-                    && itemStackFromInventory.getCount() < itemStackFromInventory.getMaxStackSize()) {
+            if (net.minecraft.world.item.ItemStack.isSameItemSameTags(stack, itemStackFromInventory) && itemStackFromInventory.getCount() < itemStackFromInventory.getMaxStackSize()) {
                 indexes.add(i);
             }
         }
@@ -195,11 +202,8 @@ public class SpectraInventory implements Inventory {
 
     @Override
     public List<ItemStack> add(List<ItemStack> stacks) {
-        var stacksToAdd = stacks.stream()
-                .map(x -> x.getItemStack()).toList().toArray(new net.minecraft.world.item.ItemStack[0]);
+        var stacksToAdd = stacks.stream().map(x -> x.getItemStack()).toList().toArray(new net.minecraft.world.item.ItemStack[0]);
         var restStacks = addItem(stacksToAdd);
-        return restStacks.stream()
-                .map(x -> new SpectraItemStack(x))
-                .map(x -> (ItemStack) x).toList();
+        return restStacks.stream().map(x -> new SpectraItemStack(x)).map(x -> (ItemStack) x).toList();
     }
 }

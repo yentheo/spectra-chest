@@ -3,14 +3,14 @@ package one.spectra.better_chests;
 import com.google.inject.Inject;
 
 import one.spectra.better_chests.inventory.Inventory;
-import one.spectra.better_chests.inventory.InventoryFactory;
+import one.spectra.better_chests.inventory.InventoryCreator;
 
 public class Mover {
 
-    private InventoryFactory _inventoryFactory;
+    private InventoryCreator _inventoryFactory;
 
     @Inject
-    public Mover(InventoryFactory inventoryFactory) {
+    public Mover(InventoryCreator inventoryFactory) {
         _inventoryFactory = inventoryFactory;
     }
 

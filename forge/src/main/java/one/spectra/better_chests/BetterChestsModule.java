@@ -9,12 +9,19 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.TypeLiteral;
+import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.multibindings.Multibinder;
 import com.google.inject.name.Names;
 import com.mojang.logging.LogUtils;
 
+import one.spectra.better_chests.abstractions.Player;
+import one.spectra.better_chests.abstractions.PlayerFactory;
+import one.spectra.better_chests.abstractions.SpectraPlayer;
+import one.spectra.better_chests.inventory.Inventory;
+import one.spectra.better_chests.inventory.InventoryCreator;
 import one.spectra.better_chests.inventory.InventoryFactory;
-import one.spectra.better_chests.inventory.SpectraInventoryFactory;
+import one.spectra.better_chests.inventory.SpectraInventory;
+import one.spectra.better_chests.inventory.SpectraInventoryCreator;
 import one.spectra.better_chests.inventory.Spreader;
 import one.spectra.better_chests.inventory.fillers.ColumnFiller;
 import one.spectra.better_chests.inventory.fillers.DefaultFiller;
@@ -38,7 +45,7 @@ public class BetterChestsModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(Logger.class).toInstance(LogUtils.getLogger());
-        bind(InventoryFactory.class).to(SpectraInventoryFactory.class);
+        bind(InventoryCreator.class).to(SpectraInventoryCreator.class);
 
         bind(Sorter.class);
         bind(Spreader.class);
@@ -49,6 +56,14 @@ public class BetterChestsModule extends AbstractModule {
         bind(ColumnFiller.class);
         bind(MessageService.class);
         bind(MessageHandlerHub.class).asEagerSingleton();
+
+        
+        install(new FactoryModuleBuilder()
+                .implement(Player.class, SpectraPlayer.class)
+                .build(PlayerFactory.class));
+        install(new FactoryModuleBuilder()
+                .implement(Inventory.class, SpectraInventory.class)
+                .build(InventoryFactory.class));
 
         bind(new TypeLiteral<List<Filler>>() {
         }).toProvider(new Provider<List<Filler>>() {

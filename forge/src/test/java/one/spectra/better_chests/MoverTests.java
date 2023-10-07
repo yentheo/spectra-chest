@@ -14,18 +14,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import one.spectra.better_chests.abstractions.ItemStack;
 import one.spectra.better_chests.inventory.Inventory;
-import one.spectra.better_chests.inventory.InventoryFactory;
+import one.spectra.better_chests.inventory.InventoryCreator;
 
 @ExtendWith(MockitoExtension.class)
 public class MoverTests {
 
     private Mover _sut;
 
-    private InventoryFactory _inventoryFactory;
+    private InventoryCreator _inventoryFactory;
 
     @BeforeEach
     public void setUp() {
-        _inventoryFactory = mock(InventoryFactory.class);
+        _inventoryFactory = mock(InventoryCreator.class);
 
         _sut = new Mover(_inventoryFactory);
     }
