@@ -5,6 +5,7 @@ import com.google.inject.assistedinject.Assisted;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.inventory.ShulkerBoxMenu;
 import net.minecraftforge.network.NetworkDirection;
 import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
 import one.spectra.better_chests.abstractions.communication.BetterChestsPacketHandler;
@@ -30,6 +31,9 @@ public class SpectraPlayer implements Player {
             if (_player.containerMenu instanceof ChestMenu) {
                 var chestMenu = (ChestMenu) _player.containerMenu;
                 return _inventoryCreator.create(chestMenu.getContainer());
+            } else if (_player.containerMenu instanceof ShulkerBoxMenu) {
+                var shulkerBoxMenu = (ShulkerBoxMenu) _player.containerMenu;
+                return _inventoryCreator.create(shulkerBoxMenu.getSlot(0).container);                
             }
         }
         return null;

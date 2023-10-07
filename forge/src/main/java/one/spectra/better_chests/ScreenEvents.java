@@ -2,6 +2,7 @@ package one.spectra.better_chests;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -16,6 +17,10 @@ public class ScreenEvents {
             var containerScreen = (ContainerScreen) screen;
             var minecraft = Minecraft.getInstance();
             event.setNewScreen(new BetterContainerScreen(containerScreen.getMenu(), new Inventory(minecraft.player), containerScreen.getTitle()));
+        } else if (screen instanceof ShulkerBoxScreen) {
+            var containerScreen = (ShulkerBoxScreen) screen;
+            var minecraft = Minecraft.getInstance();
+            event.setNewScreen(new BetterShulkerBoxScreen(containerScreen.getMenu(), new Inventory(minecraft.player), containerScreen.getTitle()));
         }
     }
 }

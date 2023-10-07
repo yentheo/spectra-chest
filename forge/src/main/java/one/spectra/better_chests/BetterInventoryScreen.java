@@ -11,7 +11,6 @@ public class BetterInventoryScreen extends InventoryScreen {
 
     public BetterInventoryScreen(Player player) {
         super(player);
-        LogUtils.getLogger().info("Better container screen");
     }
     @Override
     public void init() {

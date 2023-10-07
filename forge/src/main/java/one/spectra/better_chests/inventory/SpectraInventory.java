@@ -65,8 +65,8 @@ public class SpectraInventory implements Inventory {
     }
 
     private BlockEntity getBlockEntity() {
-        if (_inventory instanceof ChestBlockEntity) {
-            return (ChestBlockEntity) _inventory;
+        if (_inventory instanceof BlockEntity) {
+            return (BlockEntity) _inventory;
         } else if (_inventory instanceof CompoundContainer) {
             var compoundContainer = (CompoundContainer) _inventory;
             return getFirstContainer(compoundContainer);

@@ -1,26 +1,24 @@
 package one.spectra.better_chests;
 
-import com.mojang.logging.LogUtils;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.inventory.ShulkerBoxMenu;
 import one.spectra.better_chests.abstractions.communication.BetterChestsPacketHandler;
 import one.spectra.better_chests.message_handlers.messages.SortRequest;
 
 @ExcludeFromGeneratedCoverageReport
-public class BetterContainerScreen extends ContainerScreen {
+public class BetterShulkerBoxScreen extends ShulkerBoxScreen {
 
     private int _rowCount = 0;
 
-    public BetterContainerScreen(ChestMenu chestMenu, Inventory playerInventory, Component chestTitle) {
-        super(chestMenu, playerInventory, chestTitle);
-        this._rowCount = chestMenu.getRowCount();
+    public BetterShulkerBoxScreen(ShulkerBoxMenu shulkerBoxMenu, Inventory playerInventory, Component chestTitle) {
+        super(shulkerBoxMenu, playerInventory, chestTitle);
+        this._rowCount = 3;
     }
 
     @Override

@@ -32,6 +32,7 @@ public class ContainerConfigurationScreen extends Screen {
         Executors.newCachedThreadPool().submit(() -> {
             try {
                 var response = futureResponse.get();
+                LogUtils.getLogger().info("Current configured spread value:");
                 LogUtils.getLogger().info(String.valueOf(response.configuration.spread));
                 if (response.configuration.spread && !_spreadCheckbox.selected()) {
                     _spreadCheckbox.onPress();
