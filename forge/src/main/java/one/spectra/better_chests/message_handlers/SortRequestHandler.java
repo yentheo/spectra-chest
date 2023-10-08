@@ -17,6 +17,6 @@ public class SortRequestHandler implements MessageHandler<SortRequest> {
     @Override
     public void handle(Player player, SortRequest message) {
         var inventory = message.sortPlayerInventory ? player.getInventory() : player.getOpenContainer();
-        _sorter.sort(inventory);
+        _sorter.sort(inventory, message.defaultSpread, message.defaultAlphabeticalSort);
     }
 }

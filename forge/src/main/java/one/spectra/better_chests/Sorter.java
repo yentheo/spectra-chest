@@ -27,7 +27,7 @@ public class Sorter {
         _logger = logger;
     }
 
-    public void sort(Inventory inventory) {
+    public void sort(Inventory inventory, boolean defaultSpread, boolean defaultAlphabeticalSort) {
         _logger.info("Sorting inventory");
         var itemStacks = inventory.getItemStacks();
 
@@ -41,14 +41,18 @@ public class Sorter {
         Comparator<Entry<String, List<ItemStack>>> groupItemAmountComparator = Comparator.comparing(entry -> entry.getValue().stream().mapToInt(l -> l.getAmount()).sum(), Comparator.reverseOrder());
         Comparator<Entry<String, List<ItemStack>>> groupNameComparator = Comparator.comparing(entry -> entry.getKey());
 
-        var materialSorter = inventory.getAlphabeticalSort() ? groupNameComparator : groupStackAmountComparator.thenComparing(groupItemAmountComparator).thenComparing(groupNameComparator);
+        var sortAlphabetically = inventory.getAlphabeticalSort() != null ? inventory.getAlphabeticalSort() : defaultAlphabeticalSort;
+
+        var materialSorter = sortAlphabetically ? groupNameComparator : groupStackAmountComparator.thenComparing(groupItemAmountComparator).thenComparing(groupNameComparator);
         var groupedStacks = mergedStacks.stream().collect(Collectors.groupingBy(ItemStack::getMaterialKey)).entrySet().stream().sorted(materialSorter)
                 .map(x -> x.getValue().stream().sorted(Comparator.comparing(stack -> stack.getAmount(), Comparator.reverseOrder())).toList().stream().toList()).toList();
         _logger.info("Made " + groupedStacks.size() + " groups of items.");
 
         var filler = _inventoryFillerProvider.getInventoryFiller(inventory, groupedStacks);
 
+        var spread = inventory.getSpread() != null ? inventory.getSpread() : defaultSpread;
+
         _logger.info("Filling with " + filler.getClass().getSimpleName());
-        filler.fill(inventory, groupedStacks, inventory.getSpread());
+        filler.fill(inventory, groupedStacks, spread);
     }
 }

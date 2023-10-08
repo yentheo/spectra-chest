@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ChestMenu;
 import one.spectra.better_chests.abstractions.communication.BetterChestsPacketHandler;
+import one.spectra.better_chests.configuration.BetterChestsClientConfiguration;
 import one.spectra.better_chests.message_handlers.messages.SortRequest;
 
 @ExcludeFromGeneratedCoverageReport
@@ -29,7 +30,7 @@ public class BetterContainerScreen extends ContainerScreen {
         var sortButtonImage = new ResourceLocation("better_chests:sort-button.png");
         var sortContainerButton = new ImageButton(this.leftPos + this.imageWidth - 20, this.topPos + 5, 13, 9, 0, 0, 9,
                 sortButtonImage, 13, 18, e -> {
-                    BetterChestsPacketHandler.INSTANCE.sendToServer(new SortRequest(false));
+                    BetterChestsPacketHandler.INSTANCE.sendToServer(new SortRequest(false, BetterChestsClientConfiguration.SPREAD.get(), BetterChestsClientConfiguration.SORT_ALPHABETICALLY.get()));
                 });
         this.addRenderableWidget(sortContainerButton);
         var gearIconImage = new ResourceLocation("better_chests:gear-icon.png");
@@ -44,7 +45,7 @@ public class BetterContainerScreen extends ContainerScreen {
         var sortInventoryButton = new ImageButton(this.leftPos + this.imageWidth - 20,
                 this.topPos + 5 + containerHeight + 14, 13, 9, 0, 0, 9,
                 sortButtonImage, 13, 18, e -> {
-                    BetterChestsPacketHandler.INSTANCE.sendToServer(new SortRequest(true));
+                    BetterChestsPacketHandler.INSTANCE.sendToServer(new SortRequest(true, BetterChestsClientConfiguration.SPREAD.get(), BetterChestsClientConfiguration.SORT_ALPHABETICALLY.get()));
                     e.setFocused(false);
                 });
         this.addRenderableWidget(sortInventoryButton);

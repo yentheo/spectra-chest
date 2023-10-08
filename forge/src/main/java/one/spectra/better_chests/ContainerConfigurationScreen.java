@@ -1,5 +1,6 @@
 package one.spectra.better_chests;
 
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 
@@ -12,6 +13,7 @@ import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import one.spectra.better_chests.abstractions.communication.BetterChestsPacketHandler;
+import one.spectra.better_chests.configuration.BetterChestsClientConfiguration;
 import one.spectra.better_chests.message_handlers.MessageService;
 import one.spectra.better_chests.message_handlers.messages.Configuration;
 import one.spectra.better_chests.message_handlers.messages.ConfigureCurrentChestRequest;
@@ -35,10 +37,12 @@ public class ContainerConfigurationScreen extends Screen {
                 var response = futureResponse.get();
                 LogUtils.getLogger().info("Current configured spread value:");
                 LogUtils.getLogger().info(String.valueOf(response.configuration.spread));
-                if (response.configuration.spread && !_spreadCheckbox.selected()) {
+                var spread = response.configuration.spread != null ? response.configuration.spread : BetterChestsClientConfiguration.SPREAD.get();
+                if (spread && !_spreadCheckbox.selected()) {
                     _spreadCheckbox.onPress();
                 }
-                if (response.configuration.sortAlphabetically && !_sortAlphabeticallyCheckbox.selected()) {
+                var sortAlphabetically = response.configuration.sortAlphabetically != null ? response.configuration.sortAlphabetically : BetterChestsClientConfiguration.SORT_ALPHABETICALLY.get();
+                if (sortAlphabetically && !_sortAlphabeticallyCheckbox.selected()) {
                     _sortAlphabeticallyCheckbox.onPress();
                 }
             } catch (InterruptedException | ExecutionException e) {

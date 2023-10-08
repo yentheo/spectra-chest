@@ -1,6 +1,6 @@
 package one.spectra.better_chests.message_handlers.messages;
 
 public class Configuration {
-    public boolean spread;
-    public boolean sortAlphabetically;
+    public Boolean spread;
+    public Boolean sortAlphabetically;
 }

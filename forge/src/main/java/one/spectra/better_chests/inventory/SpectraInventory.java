@@ -3,11 +3,10 @@ package one.spectra.better_chests.inventory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import org.slf4j.Logger;
-import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
-import com.mojang.logging.LogUtils;
 
 import one.spectra.better_chests.ExcludeFromGeneratedCoverageReport;
 import one.spectra.better_chests.abstractions.ItemStack;
@@ -47,8 +46,8 @@ public class SpectraInventory implements Inventory {
         var blockEntity = getBlockEntity();
         if (blockEntity != null) {
             var data = blockEntity.getPersistentData();
-            _configuration.spread = data.getBoolean("better_chests:spread");
-            _configuration.sortAlphabetically = data.getBoolean("better_chests:sort_alphabetically");
+            _configuration.spread = data.contains("better_chests:spread") ? data.getBoolean("better_chests:spread") : null;
+            _configuration.sortAlphabetically = data.contains("better_chests:sort_alphabetically") ? data.getBoolean("better_chests:sort_alphabetically") : null;
         }
     }
 
@@ -103,11 +102,11 @@ public class SpectraInventory implements Inventory {
         return null;
     }
 
-    public boolean getSpread() {
+    public Boolean getSpread() {
         return this._configuration.spread;
     }
 
-    public boolean getAlphabeticalSort() {
+    public Boolean getAlphabeticalSort() {
         return this._configuration.sortAlphabetically;
     }
 
