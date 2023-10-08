@@ -22,6 +22,7 @@ import one.spectra.better_chests.message_handlers.messages.GetConfigurationRespo
 public class ContainerConfigurationScreen extends Screen {
 
     private Checkbox _spreadCheckbox;
+    private Checkbox _sortAlphabeticallyCheckbox;
     private Screen _parentScreen;
 
     protected ContainerConfigurationScreen(Component p_96550_, Screen parentScreen) {
@@ -37,6 +38,9 @@ public class ContainerConfigurationScreen extends Screen {
                 if (response.configuration.spread && !_spreadCheckbox.selected()) {
                     _spreadCheckbox.onPress();
                 }
+                if (response.configuration.sortAlphabetically && !_sortAlphabeticallyCheckbox.selected()) {
+                    _sortAlphabeticallyCheckbox.onPress();
+                }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
@@ -48,19 +52,26 @@ public class ContainerConfigurationScreen extends Screen {
     public void init() {
         super.init();
         _spreadCheckbox = new Checkbox(32, 32, 16, 20, Component.literal("Spread"), true);
+        _sortAlphabeticallyCheckbox = new Checkbox(32, 64, 16, 20, Component.literal("Sort alphabetically"), true);
         this.addRenderableWidget(_spreadCheckbox);
+        this.addRenderableWidget(_sortAlphabeticallyCheckbox);
+        if (_spreadCheckbox.selected()) {
+            _spreadCheckbox.onPress();
+        }
+        if (_sortAlphabeticallyCheckbox.selected()) {
+            _sortAlphabeticallyCheckbox.onPress();
+        }
+        
         var saveChangesButton = Button.builder(Component.literal("Save changes"), e -> {
             var config = new Configuration();
             config.spread = _spreadCheckbox.selected();
+            config.sortAlphabetically = _sortAlphabeticallyCheckbox.selected();
             var request = new ConfigureCurrentChestRequest(config);
             BetterChestsPacketHandler.INSTANCE.sendToServer(request);
             Minecraft.getInstance().setScreen(_parentScreen);
 
-        }).pos(32, 64).build();
+        }).pos(32, 96).build();
         this.addRenderableWidget(saveChangesButton);
-        if (_spreadCheckbox.selected()) {
-            _spreadCheckbox.onPress();
-        }
     }
 
     @Override

@@ -14,6 +14,8 @@ public interface Inventory {
     Configuration geConfiguration();
     void setSpread(boolean value);
     boolean getSpread();
+    void setAlphabeticalSort(boolean value);
+    boolean getAlphabeticalSort();
     int getSize();
     int getRows();
     int getColumns();

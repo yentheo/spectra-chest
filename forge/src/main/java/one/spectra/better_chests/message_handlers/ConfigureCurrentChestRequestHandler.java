@@ -23,6 +23,7 @@ public class ConfigureCurrentChestRequestHandler implements MessageHandler<Confi
         var openInventory = player.getOpenContainer();
         if (openInventory != null) {
             openInventory.setSpread(message.configuration.spread);
+            openInventory.setAlphabeticalSort(message.configuration.sortAlphabetically);
             Executors.newCachedThreadPool().submit(() -> {
                 _logger.info("Set config");
             });

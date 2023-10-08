@@ -48,6 +48,7 @@ public class SpectraInventory implements Inventory {
         if (blockEntity != null) {
             var data = blockEntity.getPersistentData();
             _configuration.spread = data.getBoolean("better_chests:spread");
+            _configuration.sortAlphabetically = data.getBoolean("better_chests:sort_alphabetically");
         }
     }
 
@@ -61,6 +62,15 @@ public class SpectraInventory implements Inventory {
             var data = blockEntity.getPersistentData();
             data.putBoolean("better_chests:spread", value);
             _configuration.spread = value;
+        }
+    }
+
+    public void setAlphabeticalSort(boolean value) {
+        var blockEntity = getBlockEntity();
+        if (blockEntity != null) {
+            var data = blockEntity.getPersistentData();
+            data.putBoolean("better_chests:sort_alphabetically", value);
+            _configuration.sortAlphabetically = value;
         }
     }
 
@@ -95,6 +105,10 @@ public class SpectraInventory implements Inventory {
 
     public boolean getSpread() {
         return this._configuration.spread;
+    }
+
+    public boolean getAlphabeticalSort() {
+        return this._configuration.sortAlphabetically;
     }
 
     public int getSize() {

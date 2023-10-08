@@ -37,23 +37,13 @@ public class Sorter {
 
         var mergedStacks = tempInventory.getItemStacks();
 
-        Comparator<Entry<String, List<ItemStack>>> groupStackAmountComparator = Comparator
-                .comparing(entry -> entry.getValue().size(), Comparator.reverseOrder());
-        Comparator<Entry<String, List<ItemStack>>> groupItemAmountComparator = Comparator.comparing(
-                entry -> entry.getValue().stream().mapToInt(l -> l.getAmount()).sum(),
-                Comparator.reverseOrder());
-        Comparator<Entry<String, List<ItemStack>>> groupNameComparator = Comparator.comparing(entry -> entry.getKey(),
-                Comparator.reverseOrder());
+        Comparator<Entry<String, List<ItemStack>>> groupStackAmountComparator = Comparator.comparing(entry -> entry.getValue().size(), Comparator.reverseOrder());
+        Comparator<Entry<String, List<ItemStack>>> groupItemAmountComparator = Comparator.comparing(entry -> entry.getValue().stream().mapToInt(l -> l.getAmount()).sum(), Comparator.reverseOrder());
+        Comparator<Entry<String, List<ItemStack>>> groupNameComparator = Comparator.comparing(entry -> entry.getKey());
 
-        var materialSorter = groupStackAmountComparator.thenComparing(groupItemAmountComparator)
-                .thenComparing(groupNameComparator);
-                
-        var groupedStacks = mergedStacks.stream().collect(Collectors.groupingBy(ItemStack::getMaterialKey)).entrySet()
-                .stream().sorted(materialSorter)
-                .map(x -> x.getValue().stream()
-                        .sorted(Comparator.comparing(stack -> stack.getAmount(), Comparator.reverseOrder())).toList()
-                        .stream().toList())
-                .toList();
+        var materialSorter = inventory.getAlphabeticalSort() ? groupNameComparator : groupStackAmountComparator.thenComparing(groupItemAmountComparator).thenComparing(groupNameComparator);
+        var groupedStacks = mergedStacks.stream().collect(Collectors.groupingBy(ItemStack::getMaterialKey)).entrySet().stream().sorted(materialSorter)
+                .map(x -> x.getValue().stream().sorted(Comparator.comparing(stack -> stack.getAmount(), Comparator.reverseOrder())).toList().stream().toList()).toList();
         _logger.info("Made " + groupedStacks.size() + " groups of items.");
 
         var filler = _inventoryFillerProvider.getInventoryFiller(inventory, groupedStacks);
