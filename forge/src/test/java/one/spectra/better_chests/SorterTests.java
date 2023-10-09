@@ -46,7 +46,7 @@ public class SorterTests {
 
         var sorter = new Sorter(inventoryFactory, inventoryFillerProvider, mock(Logger.class));
 
-        sorter.sort(myInventory);
+        sorter.sort(myInventory, false, false);
 
         verify(myInventory).getItemStacks();
         verify(myInventory).clear();
